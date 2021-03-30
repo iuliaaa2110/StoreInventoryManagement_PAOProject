@@ -7,12 +7,6 @@ public class Product {
     private String productName;
     private BigDecimal providerPrice;
     private BigDecimal storePrice;
-//    private Category productCategory;
-//    //    protected TheEntireSystem.Provider productProvider;
-//
-//    public Category getProductCategory() {
-//        return productCategory;
-//    }
 
     protected Product(String name){
 
