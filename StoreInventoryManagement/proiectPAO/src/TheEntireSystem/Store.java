@@ -27,7 +27,7 @@ public class Store {
         x = true;
     }
 
-    protected void Sell(Product p, Integer soldQuantity){
+    protected void Sell(Product p, Integer requiredQuantity){
         if(this.storeStock.getProductStock(p) == 0) {
 
             System.out.println("Sorry. We are sold out for this product: " + p.getProductName() +" . We will bring more of it soon!");
@@ -35,10 +35,27 @@ public class Store {
         else {
             if(p.getStorePrice() == null)
                 System.out.println("You need to refill the stock for this product first:" + p + " Try with Service 6.");
-            this.storeBank = this.storeBank.add(p.getStorePrice());
-            this.storeStock.updateStock(p, -soldQuantity);
+            else {
 
-            System.out.println("Successfully sold. ");
+                Integer actualQuantity = this.storeStock.getProductStock(p);
+
+                if (requiredQuantity <= actualQuantity) {
+
+                    this.storeBank = this.storeBank.add(p.getStorePrice().multiply(new BigDecimal(requiredQuantity)));
+                    this.storeStock.updateStock(p, -requiredQuantity);
+
+                    System.out.println("Successfully sold. ");
+                } else {
+
+                    this.storeBank = this.storeBank.add(p.getStorePrice().multiply(new BigDecimal(actualQuantity)));
+                    this.storeStock.updateStock(p, -actualQuantity);
+
+                    System.out.println("Could only sell " + actualQuantity + " pieces of " + p.getProductName() +
+                            "                            \". The store stock of\" +\n" +
+                            "                            p.getProductName() + \" is empty now.\"");
+                }
+
+            }
         }
     }
 

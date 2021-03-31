@@ -9,7 +9,7 @@ public class StoreHouse {
     private static StoreHouse single_instance = null;
     private Boolean x = false;
     protected StockManagement mainStock = new StockManagement(new HashMap<Product, Integer>()){};
-    private BigDecimal mainBank = new BigDecimal( 500);
+    private BigDecimal mainBank = new BigDecimal( 1500);
     private final int maxTotalStock = 3000;
 
     public static StoreHouse getInstance() {

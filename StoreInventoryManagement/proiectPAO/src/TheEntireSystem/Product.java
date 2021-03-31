@@ -48,13 +48,4 @@ public class Product {
         return providerPrice;
     }
 
-    // commented
-//      @Override
-//        public int hashCode() {
-//            int result=17;
-//            result=31*result+age;
-//            result=31*result+(productName!=null ? productName.hashCode():0);
-//            return result;
-//        }
-
 }
