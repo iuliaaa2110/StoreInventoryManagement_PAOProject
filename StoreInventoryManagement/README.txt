@@ -1,6 +1,6 @@
 StoreInventoryManagement
 
-Servicii (Interogari):
+Services (Interogari):
 Service1 - // Show actual stock from the StoreHouse
 Service2 - // Show actual stock of a store
 Service3 - // Show the bank's gain at the StoreHouse
@@ -20,5 +20,5 @@ Provider
 StockManagement
 StoreHouse
 Store
-   extends Supermarket
+   Supermarket
 Service
