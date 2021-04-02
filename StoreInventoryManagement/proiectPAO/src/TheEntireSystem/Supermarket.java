@@ -4,8 +4,9 @@ import java.math.BigDecimal;
 
 public class Supermarket extends Store{
 
-    protected static int regularStock = 70; // regular amount of stock per product
-    private final int maxTotalStock = 1000;
+
+    private final static int regularStock = 70; // regular amount of stock per product
+    private final static int maxTotalStock = 1000;
 
     public Supermarket(String address){
         super(address);

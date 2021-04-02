@@ -5,11 +5,11 @@ import java.util.*;
 
 public class Store {
 
-    public String address;
-    protected StoreHouse storeHouse = StoreHouse.getInstance();
+    private final String address;
+    private final StoreHouse storeHouse = StoreHouse.getInstance();
     protected StockManagement storeStock = new StockManagement();
-    protected static int regularStock = 7; // regular amount of stock per product
-    protected static int maxTotalStock = 100;
+    protected int regularStock = 7; // regular amount of stock per product
+    protected int maxTotalStock = 100;
     protected BigDecimal storeBank = new BigDecimal(0);
     private boolean x = false;
 
@@ -72,11 +72,11 @@ public class Store {
         this.refillProductStock(p, regularStock);
     }
 
-    public void refillProductStock(Product p, int desiredQuantity){
+    protected void refillProductStock(Product p, int desiredQuantity){
 
         //doar daca in stock ul magazinului mai e loc
 
-        if(!this.storeStock.isFull(maxTotalStock)) {
+        if(!this.storeStock.isFull(this.maxTotalStock)) {
 
             Integer currentQuantity;
             Integer availableQuantity;
@@ -144,4 +144,6 @@ public class Store {
 //    void setStoreBank(BigDecimal storeBank) {
 //        this.storeBank = storeBank;
 //    }
+
+
 }

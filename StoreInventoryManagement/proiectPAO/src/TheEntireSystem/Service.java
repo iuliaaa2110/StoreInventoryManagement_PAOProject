@@ -1,5 +1,7 @@
 package TheEntireSystem;
 
+import TheEntireSystem.Company;
+
 import java.util.Scanner;
 import java.math.BigDecimal;
 import java.util.*;

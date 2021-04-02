@@ -18,12 +18,6 @@ public class Product {
         return productName;
     }
 
-    protected void setStorePrice(){
-
-        this.storePrice = this.providerPrice.add(calculateAddition(this.providerPrice));
-
-    }
-
     protected BigDecimal getStorePrice() {
 
         return storePrice;
@@ -41,10 +35,13 @@ public class Product {
 
     protected void setProviderPrice(BigDecimal price){
         this.providerPrice = price;
-        this.setStorePrice();
+
+        //Automatically setting the store price
+        this.storePrice = this.providerPrice.add(calculateAddition(this.providerPrice));
+
     };
 
-    public BigDecimal getProviderPrice() {
+    protected BigDecimal getProviderPrice() {
         return providerPrice;
     }
 

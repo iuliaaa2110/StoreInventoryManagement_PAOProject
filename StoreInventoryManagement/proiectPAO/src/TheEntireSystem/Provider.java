@@ -7,7 +7,7 @@ public class Provider {
 
 //    protected Map<TheEntireSystem.Product, Pair<Integer, Integer>> offer;
     private String name;
-    protected Map<Product, OfferAndStock> offers;
+    private Map<Product, OfferAndStock> offers;
 
     protected Provider(String name, Map<Product, OfferAndStock> offers) {
         this.name = name; this.offers = offers;
@@ -27,11 +27,15 @@ public class Provider {
         this.offers.put(p, tuple);
     }
 
-    public Map<Product, OfferAndStock> getOffers() {
+    protected OfferAndStock getOfferByProduct(Product p){
+        return this.offers.get(p);
+    }
+
+    protected Map<Product, OfferAndStock> getOffers() {
         return offers;
     }
 
-    public BigDecimal getPrice(Product p){
+    protected BigDecimal getPrice(Product p){
         if(offers.get(p) == null)
             return new BigDecimal(0);
         return offers.get(p).getPrice();

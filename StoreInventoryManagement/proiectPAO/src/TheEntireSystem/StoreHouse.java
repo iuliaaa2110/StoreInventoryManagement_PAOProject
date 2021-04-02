@@ -24,10 +24,10 @@ public class StoreHouse {
 
         if (!this.mainStock.isFull(maxTotalStock)) {
 
-            if ( provider.offers.get(p) == null)
+            if ( provider.getOfferByProduct(p) == null)
                 System.out.println("This provider cannot help you this time :( !!");
             else {
-                OfferAndStock tuple = provider.offers.get(p);
+                OfferAndStock tuple = provider.getOfferByProduct(p);
 
                 Integer currentQuantity = this.mainStock.getProductStock(p);
                 Integer availableQuantity = tuple.getStock();
