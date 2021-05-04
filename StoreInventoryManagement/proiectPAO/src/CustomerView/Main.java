@@ -3,23 +3,40 @@ package CustomerView;
 import TheEntireSystem.Service;
 import TheEntireSystem.Store;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
         Service service = new Service();
-        service.getService();
 
-        Store store = new Store("buna");
-        Store store2 = store;
+        boolean stop = false;
 
-        System.out.println("store1 = " + store.getAddress());
-        System.out.println("store2 = " + store2.getAddress());
+        service.showOptionsList();
 
-        String address = store.getAddress();
-        address = "deci";
+        while (!stop){
+            System.out.println("\n~Enter the service you want to use: ");
+            Scanner keyboard = new Scanner(System.in);
+            String serviceNumber = keyboard.nextLine();
+            try{
+                switch (serviceNumber) {
+                    case "Service1" : service.Service1();break;
+                    case "Service2" : service.Service2();break;
+                    case "Service3" : service.Service3();break;
+                    case "Service4" : service.Service4();break;
+                    case "Service5" : service.Service5();break;
+                    case "Service6" : service.Service6();break;
+                    case "Service7" : service.Service7();break;
+                    case "Service8" : service.Service8();break;
+                    case "Service9" : service.Service9();break;
+                    case "Service10" : service.Service10();break;
 
-        store2.setAddress("pa");
+                    case "stop" : stop = true;
 
-        System.out.println("store1 = " + store.getAddress());
-        System.out.println("store2 = " + store2.getAddress());
+                }
+            }catch (Exception e){
+                System.out.println(e.toString());
+            }
+        }
     }
 }
+
