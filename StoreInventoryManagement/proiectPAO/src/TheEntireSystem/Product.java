@@ -4,21 +4,21 @@ import java.math.BigDecimal;
 
 public class Product {
 
-    private String productName;
+    private final String productName;
     private BigDecimal providerPrice;
     private BigDecimal storePrice;
 
-    protected Product(String name){
+    Product(String name){
 
         this.productName = name;
     }
 
-    protected String getProductName() {
+    String getProductName() {
 
         return productName;
     }
 
-    protected BigDecimal getStorePrice() {
+    BigDecimal getStorePrice() {
 
         return storePrice;
     }
@@ -29,19 +29,15 @@ public class Product {
         return productName;
     }
 
-    protected BigDecimal calculateAddition(BigDecimal initialPrice){
-        return initialPrice.multiply(new BigDecimal(7)).divide(new BigDecimal(100));   // addition price = 7%
+    void setProviderPrice(BigDecimal price){
+        this.providerPrice = price;
     }
 
-    protected void setProviderPrice(BigDecimal price){
-        this.providerPrice = price;
+    protected void setStorePrice(BigDecimal price){
+        this.storePrice = price;
+    }
 
-        //Automatically setting the store price
-        this.storePrice = this.providerPrice.add(calculateAddition(this.providerPrice));
-
-    };
-
-    protected BigDecimal getProviderPrice() {
+    BigDecimal getProviderPrice() {
         return providerPrice;
     }
 

@@ -7,7 +7,7 @@ public class StockManagement {
 
     private Map<Product, Integer> stock = new HashMap<>();
 
-    protected StockManagement(){
+    public StockManagement(){
         this.stock = new HashMap<>();
     }
 

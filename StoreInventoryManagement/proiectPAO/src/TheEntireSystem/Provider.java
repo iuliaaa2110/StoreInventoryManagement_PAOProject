@@ -6,8 +6,8 @@ import java.util.Map;
 public class Provider {
 
 //    protected Map<TheEntireSystem.Product, Pair<Integer, Integer>> offer;
-    private String name;
-    private Map<Product, OfferAndStock> offers;
+    private final String name;
+    protected Map<Product, OfferAndStock> offers;
 
     protected Provider(String name, Map<Product, OfferAndStock> offers) {
         this.name = name; this.offers = offers;

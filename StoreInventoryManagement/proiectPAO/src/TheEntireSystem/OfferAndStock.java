@@ -13,7 +13,7 @@ public class OfferAndStock {
 
     public String toString() {
 
-        return " ( price = " + price.toString() +" ; stock = " + stock.toString() + "; ) \n";
+        return " ( price = " + price.toString() +" ; stock = " + stock.toString() + " ) \n";
     }
 
     protected BigDecimal getPrice() {
@@ -22,10 +22,6 @@ public class OfferAndStock {
 
     protected Integer getStock() {
         return stock;
-    }
-
-    protected void setPrice(BigDecimal price) {
-        this.price = price;
     }
 
     protected void setStock(Integer stock) {
