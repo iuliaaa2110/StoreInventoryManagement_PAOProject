@@ -15,7 +15,6 @@ public class StoreHouse {
         this.mainBank = mainBank;
     }
 
-
     public BigDecimal getMainBank() {
         return mainBank;
     }

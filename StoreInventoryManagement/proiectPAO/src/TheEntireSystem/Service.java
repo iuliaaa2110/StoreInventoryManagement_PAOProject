@@ -193,6 +193,7 @@ public class Service {
     }
 
     public void showOptionsList(){
+        System.out.println("Services:\n");
         System.out.println("Service1  = Show actual stock from the storeHouse \n" +
                 "Service2  = Show actual stock of a store \n" +
                 "Service3  = Show actual stock of the Storehouse \n" +
