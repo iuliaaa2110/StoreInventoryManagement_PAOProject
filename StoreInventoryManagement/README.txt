@@ -1,10 +1,10 @@
 StoreInventoryManagement
 
 Services (Interogari):
-Service1 - // Show actual stock from the StoreHouse
-Service2 - // Show actual stock of a store
+Service1 - // Show actual stock of the StoreHouse
+Service2 - // Show actual stock of a given store
 Service3 - // Show the bank's gain at the StoreHouse
-Service4 - // Show the bank's gain of a store
+Service4 - // Show the bank's gain of a given store
 Service5 - // Send the money from a store to the StoreHouse
 Service6 - // Refill the stock for specific products (either with the regular quantity, either with a specific quantity) at one or more stores
 Service7 - // find the provider with the best price for a product
