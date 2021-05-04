@@ -16,6 +16,16 @@ public class Store {
 
     }
 
+    @Override
+    public String toString() {
+        return address;
+//                ", storeStock=" + storeStock +
+//                ", regularStock=" + regularStock +
+//                ", maxTotalStock=" + maxTotalStock +
+//                ", storeBank=" + storeBank +
+//                '}';
+    }
+
     int getRegularStock(){ return regularStock;};
     protected void setStoreStock(StockManagement initialStock) {
         this.storeStock = initialStock;

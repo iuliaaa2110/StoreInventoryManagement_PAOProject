@@ -25,8 +25,8 @@ public class Product {
 
     // overloading the string, respectively print operator
     public String toString() {
-
         return productName;
+//        return productName + " (entryPrice = " + providerPrice + "; outPrice = " + storePrice +")";
     }
 
     void setProviderPrice(BigDecimal price){

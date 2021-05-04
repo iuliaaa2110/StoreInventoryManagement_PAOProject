@@ -15,10 +15,9 @@ public class Provider {
 
     @Override
     public String toString() {
-        return "Provider{" +
-                "name='" + name + '\'' +
-                ", offers=" + offers +
-                '}';
+        return  name +
+                "\n offers:\n" + offers +
+                " \n\n";
     }
 
     protected void decreaseProductStock(Product p, int toDecrease){

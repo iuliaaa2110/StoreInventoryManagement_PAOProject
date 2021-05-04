@@ -51,7 +51,26 @@ public class Franchise {
     public String toString() {
     // o sa fac cate un overload in fiecare clasa in parte (product, provider etc)
     // si abia apoi parcurg for urile aici si le afisez.
-        return "Franchise = ?";
+
+        StringBuilder s = new StringBuilder();
+
+        s.append("\nProducts:\n\n");
+        for (int i = 0; i < products.size(); i ++) {
+            s.append(i).append(".").append(products.get(i)).append("; ");
+        }
+
+        s.append("\n\nProviders:\n\n");
+        for (int i = 0; i < providers.size(); i ++) {
+            s.append(i).append(".").append(providers.get(i)).append(",\n ");
+        }
+
+        s.append("\n\nStores:\n\n");
+        for (int i = 0; i < franchisePoints.size(); i ++) {
+            s.append(i).append(".").append(franchisePoints.get(i)).append('\n');
+        }
+
+        s.append('\n');
+        return s.toString();
     }
 
     // Utils:
