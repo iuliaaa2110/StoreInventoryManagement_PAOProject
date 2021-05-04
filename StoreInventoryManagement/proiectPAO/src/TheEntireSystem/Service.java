@@ -193,6 +193,8 @@ public class Service {
     }
 
     public void showOptionsList(){
+        System.out.println(franchise);
+
         System.out.println("Services:\n");
         System.out.println("Service1  = Show actual stock from the storeHouse \n" +
                 "Service2  = Show actual stock of a store \n" +
@@ -201,44 +203,10 @@ public class Service {
                 "Service5  = Send the money from a store's bank to the StoreHouse's bank \n" +
                 "Service6  = Refill the stock at a store for specific products, inccreasing " +
                 "the stock to the desired quantity." +
-                "(with the regular quantity or with a specific quantity) \n" +
+                "(either to the regular quantity, either to a specific quantity) \n" +
                 "Service7  = Find the provider with the best price for a product \n" +
                 "Service8  = Make an order to a provider \n" +
                 "Service9  = Make a sell \n" +
                 "Service10 = Calculate the outprice for a product \n");
     }
-
-    public void getService() {
-
-        boolean stop = false;
-
-        System.out.println(franchise);
-        showOptionsList();
-
-        while (!stop){
-            System.out.println("\n~Enter the service you want to use: ");
-            Scanner keyboard = new Scanner(System.in);
-            String serviceNumber = keyboard.nextLine();
-            try{
-                switch (serviceNumber) {
-                    case "Service1" : Service1();break;
-                    case "Service2" : Service2();break;
-                    case "Service3" : Service3();break;
-                    case "Service4" : Service4();break;
-                    case "Service5" : Service5();break;
-                    case "Service6" : Service6();break;
-                    case "Service7" : Service7();break;
-                    case "Service8" : Service8();break;
-                    case "Service9" : Service9();break;
-                    case "Service10" : Service10();break;
-
-                    case "stop" : stop = true;
-
-                }
-            }catch (Exception e){
-                System.out.println(e.toString());
-            }
-        }
-    }
-
 }
