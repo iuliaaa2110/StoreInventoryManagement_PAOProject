@@ -5,26 +5,20 @@ import java.util.*;
 
 public class Store {
 
-    private final String address;
-    private final StoreHouse storeHouse = StoreHouse.getInstance();
+    protected String address;
     protected StockManagement storeStock = new StockManagement();
     protected int regularStock = 7; // regular amount of stock per product
     protected int maxTotalStock = 100;
     protected BigDecimal storeBank = new BigDecimal(0);
-    private boolean x = false;
-
 
     public Store(String address){
         this.address = address;
 
     }
 
-    // fiecare store poate fi initializat o singura data!
-    protected void setStoreStock(StockManagement initializeStock) {
-
-        if(!x)
-            this.storeStock = initializeStock;
-        x = true;
+    int getRegularStock(){ return regularStock;};
+    protected void setStoreStock(StockManagement initialStock) {
+        this.storeStock = initialStock;
     }
 
     protected void Sell(Product p, Integer requiredQuantity){
@@ -34,7 +28,7 @@ public class Store {
         }
         else {
             if(p.getStorePrice() == null)
-                System.out.println("You need to refill the stock for this product first:" + p + " Try with Service 6.");
+                System.out.println("We need to refill the stock for this product first:" + p + " Try with Service 6.");
             else {
 
                 Integer actualQuantity = this.storeStock.getProductStock(p);
@@ -68,65 +62,12 @@ public class Store {
         }
     }
 
-    protected void refillProductStock(Product p){
-        this.refillProductStock(p, regularStock);
-    }
-
-    protected void refillProductStock(Product p, int desiredQuantity){
-
-        //doar daca in stock ul magazinului mai e loc
-
-        if(!this.storeStock.isFull(this.maxTotalStock)) {
-
-            Integer currentQuantity;
-            Integer availableQuantity;
-
-            if(this.storeStock.getProductStock(p) == 0)
-                currentQuantity = 0;
-            else
-                currentQuantity = this.storeStock.getProductStock(p);
-
-            Integer neededQuantity = desiredQuantity - currentQuantity;
-
-            if(storeHouse.mainStock.getProductStock(p) == 0)
-                availableQuantity= 0;
-            else
-                availableQuantity = storeHouse.mainStock.getProductStock(p);
-
-            if (neededQuantity == 0) {
-
-                System.out.println("Stock already full.");
-            } else {
-                if (availableQuantity >= neededQuantity) {
-
-                    this.storeStock.updateStock(p, desiredQuantity);
-                    storeHouse.mainStock.updateStock(p, availableQuantity - neededQuantity);
-
-                    System.out.println("The stock of " + p.getProductName() + " succesfully refilled at " + this.address + " store");
-
-                } else {
-
-                    this.storeStock.updateStock(p, currentQuantity + availableQuantity);
-                    storeHouse.mainStock.updateStock(p, 0);
-
-                    System.out.println("Could only be added " + availableQuantity + " pieces. The main stock (from the TheEntireSystem.StoreHouse) of " + p.getProductName() + " is empty now.");
-                }
-            }
-        }
-        else
-            System.out.println("No more free space in the store for bringing other items :( .");
-    }
-
-    // trimite banii incasati la depozitul central (storehouse)
-    protected void clearBank(){
-        storeHouse.collects(this.storeBank);
-
-//        this.storeBank -= this.storeBank;
-        this.storeBank = new BigDecimal(0);
-    }
-
     public String getAddress() {
         return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
 //    protected setStoreStock(TheEntireSystem.StockManagement storeStock) {
