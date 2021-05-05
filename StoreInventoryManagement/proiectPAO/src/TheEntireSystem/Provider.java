@@ -10,8 +10,7 @@ public class Provider {
     public Provider(String name, Map<Product, OfferAndStock> offers) {
         this.name = name; this.offers = offers;
     }
-
-    @Override
+    
     public String toString() {
         return  name +
                 "\n offers:\n" + offers +
@@ -26,10 +25,6 @@ public class Provider {
 
     protected OfferAndStock getOfferByProduct(Product p){
         return this.offers.get(p);
-    }
-
-    protected Map<Product, OfferAndStock> getOffers() {
-        return offers;
     }
 
     protected BigDecimal getPrice(Product p){

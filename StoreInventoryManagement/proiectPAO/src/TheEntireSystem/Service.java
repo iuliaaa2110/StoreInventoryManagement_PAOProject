@@ -8,7 +8,7 @@ import java.util.*;
 
 public class Service {
 
-    Franchise franchise = new Franchise();
+    Franchise franchise = Franchise.getInstance();
 
 
     //   Show actual stock from the storeHouse
@@ -184,7 +184,6 @@ public class Service {
         int nr = keyboard.nextInt();
 
         Product product = franchise.getProductById(nr);
-
         franchise.setOutprice(product);
     }
 
