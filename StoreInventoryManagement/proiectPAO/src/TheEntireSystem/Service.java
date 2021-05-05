@@ -9,14 +9,11 @@ import java.util.*;
 public class Service {
 
     Franchise franchise = Franchise.getInstance();
-
-
-    //   Show actual stock from the storeHouse
+    
     public void show_storehouse_stock (){
         franchise.getStoreHouseStock();
     }
 
-    //  Show actual stock of a store
     public void show_store_stock(){
         System.out.println("Write the number of the store for which you wanna see the stock.\n");
 
@@ -26,13 +23,11 @@ public class Service {
         franchise.getStoreStock(nr);
     }
 
-    // Show the bank's gain at the storeHouse
     public void show_storehouse_bank(){
         franchise.getStoreHouseGain();
 
     }
 
-    // Show the bank's gain of a store
     public void show_store_bank(){
         System.out.println("Write the number of the store for which you wanna see the bank's money.");
 
@@ -42,7 +37,6 @@ public class Service {
         franchise.getStoreGain(nr);
     }
 
-    // Send the money from a store's bank to the StoreHouse's bank
     public void collect_gain(){
         System.out.println("\nWrite the number of the store who needs to send the money to the StoreHouse.");
 
@@ -55,11 +49,10 @@ public class Service {
 
     }
 
-    // Refill the stock at a store for specific franchise.products (with the regular quantity or with a specific quantity)
     public void refill(){
 
         System.out.println("\nWrite the number of the store who needs the stock refill, \nthe number of the " +
-                "product you need to add, \n and optional: the final quantity you want to have. ");
+                "product you need to add, \n and optional: the final quantity you want to have.\n");
         System.out.println("With spaces between!");
         System.out.println("You can do that all over again. Just press '.' when you re done.\n");
 
@@ -96,7 +89,6 @@ public class Service {
         }
     }
 
-
     // cand nu mai avem in depozit un produs si vrem sa comandam de la un furnizor,
     // iteram prin ofertele furnizorilor si il alegem pe cel care vinde produsul mai ieftin
     // find the provider with the best price for a product
@@ -111,8 +103,6 @@ public class Service {
         franchise.chooseProvider(product);
     }
 
-
-    // make an order to a provider
     public void order(){
         System.out.println();
         System.out.println("Write the number of the provider you wanna buy from");
@@ -138,7 +128,6 @@ public class Service {
 
     }
 
-    // make a sell
     // if the client buys a significantly amount of items from a Supermarket he gets a discount
     public void sell(){
         System.out.println("Type the number of the store where the sell occurs");
@@ -161,8 +150,6 @@ public class Service {
                     " Do it how many times you need ( one pair at a line ). Type '.' if you re done.");
 
             st = keyboard.nextLine().trim();
-            //        st = keyboard.nextLine();
-            //        int Q = Integer.parseInt(tempStr.trim());
 
             while (!st.equals(".")) {
                 t = st.split(" ");
@@ -179,7 +166,6 @@ public class Service {
 
     }
 
-    // Calculate the outprice for a product
     public void calculate_outprice(){
         System.out.println("Type the number of the product");
 
