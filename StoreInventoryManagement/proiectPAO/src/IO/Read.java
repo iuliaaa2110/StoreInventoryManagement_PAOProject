@@ -12,20 +12,20 @@ import java.util.HashMap;
 import java.util.Map;
 import TheEntireSystem.StockManagement;
 
-
+// as prefera s-o fac statica decat singleton..
 public class Read {
-//    private static Read instance = null;
-//
-//    private Read() {
-//    }
-//
-//    public static Read getInstance() {
-//        if (instance == null)
-//            instance = new Read();
-//        return instance;
-//    }
+    private static Read instance = null;
 
-    public static ArrayList<Product> readProducts(){
+    private Read() {
+    }
+
+    public static Read getInstance() {
+        if (instance == null)
+            instance = new Read();
+        return instance;
+    }
+
+    public ArrayList<Product> readProducts(){
         try(var in = new BufferedReader(new FileReader("StoreInventoryManagement/proiectPAO/data/products.csv"))){
 
             String line;
@@ -51,7 +51,7 @@ public class Read {
         }
     }
 
-    public static ArrayList<Provider> readProviders(ArrayList<Product> products){
+    public ArrayList<Provider> readProviders(ArrayList<Product> products){
         try(var in = new BufferedReader(new FileReader("StoreInventoryManagement/proiectPAO/data/providers.csv"))){
 
             String line;
@@ -98,7 +98,7 @@ public class Read {
         }
     }
 
-    public static ArrayList<Store> readStores(){
+    public ArrayList<Store> readStores(){
         try(var in = new BufferedReader(new FileReader("StoreInventoryManagement/proiectPAO/data/stores.csv"))){
             String line;
 
@@ -121,7 +121,7 @@ public class Read {
         }
     }
 
-    public static StockManagement readStockManagement(String path, ArrayList<Product> products){
+    public StockManagement readStockManagement(String path, ArrayList<Product> products){
         try(var in = new BufferedReader(new FileReader(path))){
 
             String line;
@@ -158,7 +158,7 @@ public class Read {
     }
 
     //StoreHouse o sa aiba mereu o singura linie!
-    public static StoreHouse readStoreHouse(ArrayList<Product> products){
+    public StoreHouse readStoreHouse(ArrayList<Product> products){
         try(var in = new BufferedReader(new FileReader("StoreInventoryManagement/proiectPAO/data/storehouse.csv"))){
 
             String line;
@@ -166,7 +166,9 @@ public class Read {
             if ((line = in.readLine()) != null){
                 String []fields = line.replaceAll(" ", "").split(",");
 
-                return StoreHouse.getInstance(readStockManagement("StoreInventoryManagement/proiectPAO/data/" + fields[1], products), new BigDecimal(fields[0]));
+                String stockPath ="StoreInventoryManagement/proiectPAO/data/" + fields[1];
+
+                return StoreHouse.getInstance(readStockManagement(stockPath, products), new BigDecimal(fields[0]),  fields[1]);
             }
 
             return null;

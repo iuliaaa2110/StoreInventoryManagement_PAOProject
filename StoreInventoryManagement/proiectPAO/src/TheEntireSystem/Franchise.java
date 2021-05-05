@@ -3,6 +3,7 @@ package TheEntireSystem;
 import java.math.BigDecimal;
 import java.util.*;
 import IO.Read;
+import IO.Write;
 
 public class Franchise {
     private final ArrayList<Store> franchisePoints;
@@ -13,20 +14,23 @@ public class Franchise {
 
     private static Franchise instance = null;
 
+//    FranchiseInit franchiseInit = new FranchiseInit();
+    Read read = Read.getInstance();
+    Write write = Write.getInstance();
+
+
     // Constructors
     private Franchise() {
-
-        FranchiseInit franchiseInit = new FranchiseInit();
 
 //         this.products = franchiseInit.initProducts();
 //         this.providers = franchiseInit.initProviders(products);
 //         this.franchisePoints  = franchiseInit.initFranchisePoints(products);
 //        this.storeHouse = franchiseInit.initStoreHouse(providers, products);
 
-        this.products = Read.readProducts();
-        this.providers = Read.readProviders(products);
-        this.franchisePoints = Read.readStores();
-        this.storeHouse = Read.readStoreHouse(products);
+        this.products = read.readProducts();
+        this.providers = read.readProviders(products);
+        this.franchisePoints = read.readStores();
+        this.storeHouse = read.readStoreHouse(products);
     }
 
     public static Franchise getInstance() {
@@ -247,7 +251,12 @@ public class Franchise {
         }
     }
 
-    // Setters and Getters
+    public void UpdateCSV(){
+        write.writeProducts(products);
+        write.writeStorehouse(storeHouse);
+        write.writeProviders(providers);
+    }
+
     Store getStoreById(int nr){
         return franchisePoints.get(nr);
     }
@@ -256,9 +265,32 @@ public class Franchise {
         return products.get(nr);
     }
 
-    Provider getProviderById(int nr){
-        return providers.get(nr);
+    Product getProductById(String name){
+        int i;
+
+        Product p = new Product(name);
+
+        if(products.contains(p)){
+            i = products.indexOf(p);
+            return products.get(i);
+        }
+
+        return null;
     }
+
+    Provider getProviderById(int nr){return providers.get(nr); }
+
+    Provider getProviderById(String name){
+        int i;
+
+        Provider p = new Provider(name);
+
+        if(providers.contains(p)){
+            i = providers.indexOf(p);
+            return providers.get(i);
+        }
+
+        return null; }
 
     int getPointsNumber(){
         return franchisePoints.size();

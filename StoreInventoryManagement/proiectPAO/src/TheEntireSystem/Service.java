@@ -9,7 +9,7 @@ import java.util.*;
 public class Service {
 
     Franchise franchise = Franchise.getInstance();
-    
+
     public void show_storehouse_stock (){
         franchise.getStoreHouseStock();
     }
@@ -51,10 +51,11 @@ public class Service {
 
     public void refill(){
 
-        System.out.println("\nWrite the number of the store who needs the stock refill, \nthe number of the " +
+        System.out.println("\nWrite the number of the store who needs the stock refill, \nthe name of the " +
                 "product you need to add, \n and optional: the final quantity you want to have.\n");
         System.out.println("With spaces between!");
         System.out.println("You can do that all over again. Just press '.' when you re done.\n");
+        System.out.println("Example: 2 Watter 25");
 
         Scanner keyboard = new Scanner(System.in);
         String st = keyboard.nextLine();
@@ -65,22 +66,15 @@ public class Service {
 
             if(t.length == 2) {
                 int storeId = Integer.parseInt(t[0]);
-                int productId = Integer.parseInt(t[1]);
-
-                System.out.println(storeId + productId);
-
                 Store store = franchise.getStoreById(storeId);
-                Product product = franchise.getProductById(productId);
+                Product product = franchise.getProductById(t[1]);
 
                 franchise.refillProductStock(store, product);
             }
             else if(t.length == 3){
-                int nr = Integer.parseInt(t[0]);
-                int nr2 = Integer.parseInt(t[1]);
+                Store store = franchise.getStoreById(Integer.parseInt(t[0]));
+                Product product = franchise.getProductById(t[1]);
                 int quantity = Integer.parseInt(t[2]);
-
-                Store store = franchise.getStoreById(nr);
-                Product product = franchise.getProductById(nr2);
 
                 franchise.refillProductStock(store, product, quantity);
             }
@@ -93,36 +87,46 @@ public class Service {
     // iteram prin ofertele furnizorilor si il alegem pe cel care vinde produsul mai ieftin
     // find the provider with the best price for a product
     public void find_provider() {
-        System.out.println("Write the number of the product you would want to order.");
+        System.out.println("Write the number or the name of the product you would want to order.");
 
         Scanner keyboard = new Scanner(System.in);
-        int nr = keyboard.nextInt();
 
-        Product product = franchise.getProductById(nr);
+        Product product;
 
-        franchise.chooseProvider(product);
+        if(keyboard.hasNextInt())
+            product = franchise.getProductById(keyboard.nextInt());
+        else
+            product = franchise.getProductById(keyboard.nextLine());
+
+        if(product != null)
+            franchise.chooseProvider(product);
+        else
+            System.out.println("This product does not exist");
     }
 
     public void order(){
-        System.out.println();
-        System.out.println("Write the number of the provider you wanna buy from");
-
         Scanner keyboard = new Scanner(System.in);
-        int nr = keyboard.nextInt();
 
-        System.out.println("Write the number of the product you wanna order");
+        Product product;
+        Provider provider;
 
-        int nr1 = keyboard.nextInt();
+        System.out.println();
+        System.out.println("Write the number (or the name) of the provider you wanna buy from");
+
+        if(keyboard.hasNextInt())
+            provider = franchise.getProviderById(keyboard.nextInt());
+        else
+            provider = franchise.getProviderById(keyboard.nextLine());
+
+        System.out.println("Write the number (or the name) of the product you wanna order");
+
+        if(keyboard.hasNextInt())
+            product = franchise.getProductById(keyboard.nextInt());
+        else
+            product = franchise.getProductById(keyboard.nextLine());
 
         System.out.println("Write the quantity you need");
-
         int quantity = keyboard.nextInt();
-
-        Provider provider = franchise.getProviderById(nr);
-        Product product = franchise.getProductById(nr1);
-
-        System.out.println(provider);
-        System.out.println(product);
 
         franchise.provide(provider, product, quantity);
 
@@ -130,15 +134,14 @@ public class Service {
 
     // if the client buys a significantly amount of items from a Supermarket he gets a discount
     public void sell(){
-        System.out.println("Type the number of the store where the sell occurs");
+        System.out.println("Type the store where the sell occurs");
 
         Scanner keyboard = new Scanner(System.in);
         String st = keyboard.nextLine().trim();
 
-        // stiu ca pare o rezolvare foarte odd,
-        // dar din nush ce motiv cu nextInt imi dadea eroare java.lang.NumberFormatException: For input string: ""
         String[] t =  st.split(" ");
         int nr = Integer.parseInt(t[0]);
+        Product product;
 
         if(nr > franchise.getPointsNumber() || st.length() > 1)
             System.out.println("There is no store with this number/Wrong input.");
@@ -146,18 +149,14 @@ public class Service {
 
             Map<Product, Integer> myMap = new HashMap<>();
 
-            System.out.println("And then type productNumber and quantity with space between." +
+            System.out.println("And then type product and quantity with space between." +
                     " Do it how many times you need ( one pair at a line ). Type '.' if you re done.");
 
             st = keyboard.nextLine().trim();
 
             while (!st.equals(".")) {
                 t = st.split(" ");
-                int a = Integer.parseInt(t[0]);
-                Integer b = Integer.parseInt(t[1]);
-
-                myMap.put(franchise.getProductById(a), b);
-
+                myMap.put(franchise.getProductById(t[0]), Integer.parseInt(t[1]));
                 st = keyboard.nextLine().trim();
             }
 
@@ -167,13 +166,20 @@ public class Service {
     }
 
     public void calculate_outprice(){
-        System.out.println("Type the number of the product");
+        System.out.println("Type the number (or the name) of the product");
 
         Scanner keyboard = new Scanner(System.in);
-        int nr = keyboard.nextInt();
+        Product product;
 
-        Product product = franchise.getProductById(nr);
-        franchise.setOutprice(product);
+        if(keyboard.hasNextInt())
+            product = franchise.getProductById(keyboard.nextInt());
+        else
+            product = franchise.getProductById(keyboard.nextLine());
+
+        if(product != null)
+            franchise.setOutprice(product);
+        else
+            System.out.println("Wrong input/ The product does not exist");
     }
 
     public void showOptionsList(){
@@ -194,5 +200,9 @@ public class Service {
                 "9.  sell                  = Make a sell \n" +
                 "10. calculate_outprice    = Calculate the outprice for a product \n");
 
+    }
+
+    public void updateCSV(){
+        franchise.UpdateCSV();
     }
 }
