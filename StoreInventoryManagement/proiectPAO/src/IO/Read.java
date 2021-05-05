@@ -1,9 +1,6 @@
 package IO;
 
-import TheEntireSystem.OfferAndStock;
-import TheEntireSystem.Product;
-import TheEntireSystem.Provider;
-import TheEntireSystem.Store;
+import TheEntireSystem.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -94,8 +91,12 @@ public class Read {
             ArrayList<Store> stores = new ArrayList<>();
 
             while ( (line = in.readLine()) != null) {
-//                line = line.replaceAll(" ", "");
-                stores.add(new Store(line));
+                String []fields = line.replaceAll(" ", "").split(",");
+
+                if(fields[1].equals("ST"))
+                    stores.add(new Store(fields[0]));
+                else
+                    stores.add(new Supermarket(fields[0]));
             }
 
             return stores;

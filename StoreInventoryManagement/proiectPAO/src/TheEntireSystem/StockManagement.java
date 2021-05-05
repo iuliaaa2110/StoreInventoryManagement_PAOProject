@@ -20,6 +20,13 @@ public class StockManagement {
         return stock;
     }
 
+    @Override
+    public String toString() {
+        return "StockManagement{" +
+                "stock=" + stock +
+                '}';
+    }
+
     // either add new pair (if the product does not exist in the stock), either modify the quantity of the product
     protected void updateStock(Product p, Integer quantity){
         this.stock.put(p, quantity);
