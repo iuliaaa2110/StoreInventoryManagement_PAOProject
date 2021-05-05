@@ -42,17 +42,27 @@ public class Product {
         return this.productName.equals(p.productName);
     }
 
+    public String toString() {
+        return productName;
+        // return productName + " (entryPrice = " + providerPrice + "; outPrice = " + storePrice +")";
+    }
+
+    public String Columns() {
+        if(providerPrice ==  null)
+            return productName + ",,";
+
+        if(storePrice ==  null)
+            return productName + "," + providerPrice +",";
+
+        return productName + "," + providerPrice + "," + storePrice;
+    }
+
     String getProductName() {
         return productName;
     }
 
     BigDecimal getStorePrice() {
         return storePrice;
-    }
-
-    public String toString() {
-        return productName;
-        // return productName + " (entryPrice = " + providerPrice + "; outPrice = " + storePrice +")";
     }
 
     void setProviderPrice(BigDecimal price){
