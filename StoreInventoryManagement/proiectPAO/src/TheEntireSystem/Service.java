@@ -28,7 +28,6 @@ public class Service {
 
     // Show the bank's gain at the storeHouse
     public void Service3(){
-
         franchise.getStoreHouseGain();
 
     }
@@ -115,7 +114,6 @@ public class Service {
 
     // make an order to a provider
     public void Service8(){
-
         System.out.println();
         System.out.println("Write the number of the provider you wanna buy from");
 
@@ -140,8 +138,6 @@ public class Service {
     // make a sell
     // if the client buys a significantly amount of items from a Supermarket he gets a discount
     public void Service9(){
-
-
         System.out.println("Type the number of the store where the sell occurs");
 
         Scanner keyboard = new Scanner(System.in);

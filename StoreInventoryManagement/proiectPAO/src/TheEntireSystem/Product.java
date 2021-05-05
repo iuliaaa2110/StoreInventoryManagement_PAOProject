@@ -8,25 +8,27 @@ public class Product {
     private BigDecimal providerPrice;
     private BigDecimal storePrice;
 
-    Product(String name){
-
+    public Product(String name){
         this.productName = name;
     }
 
-    String getProductName() {
+    public Product(String productName, BigDecimal providerPrice, BigDecimal storePrice) {
+        this.productName = productName;
+        this.providerPrice = providerPrice;
+        this.storePrice = storePrice;
+    }
 
+    String getProductName() {
         return productName;
     }
 
     BigDecimal getStorePrice() {
-
         return storePrice;
     }
 
-    // overloading the string, respectively print operator
     public String toString() {
         return productName;
-//        return productName + " (entryPrice = " + providerPrice + "; outPrice = " + storePrice +")";
+        // return productName + " (entryPrice = " + providerPrice + "; outPrice = " + storePrice +")";
     }
 
     void setProviderPrice(BigDecimal price){

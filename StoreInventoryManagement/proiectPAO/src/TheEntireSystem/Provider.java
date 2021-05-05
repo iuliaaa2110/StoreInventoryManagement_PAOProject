@@ -4,12 +4,10 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 public class Provider {
-
-//    protected Map<TheEntireSystem.Product, Pair<Integer, Integer>> offer;
     private final String name;
     protected Map<Product, OfferAndStock> offers;
 
-    protected Provider(String name, Map<Product, OfferAndStock> offers) {
+    public Provider(String name, Map<Product, OfferAndStock> offers) {
         this.name = name; this.offers = offers;
     }
 

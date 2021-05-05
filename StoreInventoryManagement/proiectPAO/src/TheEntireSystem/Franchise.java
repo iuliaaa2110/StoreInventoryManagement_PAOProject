@@ -2,6 +2,7 @@ package TheEntireSystem;
 
 import java.math.BigDecimal;
 import java.util.*;
+import IO.Read;
 
 public class Franchise {
     private final ArrayList<Store> franchisePoints;
@@ -15,9 +16,13 @@ public class Franchise {
 
         FranchiseInit franchiseInit = new FranchiseInit();
 
-        this.products = franchiseInit.initProducts();
-        this.providers = franchiseInit.initProviders(products);
-        this.franchisePoints  = franchiseInit.initFranchisePoints(products);
+        // this.products = franchiseInit.initProducts();
+        // this.providers = franchiseInit.initProviders(products);
+        // this.franchisePoints  = franchiseInit.initFranchisePoints(products);
+
+        this.products = Read.readProducts();
+        this.providers = Read.readProviders();
+        this.franchisePoints = Read.readStores();
         this.storeHouse = franchiseInit.initStoreHouse(providers, products);
     }
 
@@ -47,11 +52,8 @@ public class Franchise {
         return franchisePoints.size();
     }
 
-    // Overload
+    //Overloading
     public String toString() {
-    // o sa fac cate un overload in fiecare clasa in parte (product, provider etc)
-    // si abia apoi parcurg for urile aici si le afisez.
-
         StringBuilder s = new StringBuilder();
 
         s.append("\nProducts:\n\n");
@@ -70,6 +72,7 @@ public class Franchise {
         }
 
         s.append('\n');
+
         return s.toString();
     }
 
@@ -78,6 +81,7 @@ public class Franchise {
         return initialPrice.multiply(new BigDecimal(7)).divide(new BigDecimal(100));   // addition price = 7%
     }
 
+    //Services:
     protected void refillProductStock(Store store, Product p){
         this.refillProductStock(store, p, store.getRegularStock());
     }
@@ -176,9 +180,6 @@ public class Franchise {
             }
         }
     }
-
-
-    //Services:
 
     //   Show actual stock from the storeHouse
     protected void getStoreHouseStock (){
