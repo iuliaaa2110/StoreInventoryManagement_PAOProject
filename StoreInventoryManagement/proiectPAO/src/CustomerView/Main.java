@@ -18,16 +18,16 @@ public class Main {
             String operation = keyboard.nextLine();
             try{
                 switch (operation) {
-                    case "Service1" : service.Service1();break;
-                    case "Service2" : service.Service2();break;
-                    case "Service3" : service.Service3();break;
-                    case "Service4" : service.Service4();break;
-                    case "Service5" : service.Service5();break;
-                    case "Service6" : service.Service6();break;
-                    case "Service7" : service.Service7();break;
-                    case "Service8" : service.Service8();break;
-                    case "Service9" : service.Service9();break;
-                    case "Service10" : service.Service10();break;
+                    case "show_storehouse_stock" : service.show_storehouse_stock();break;
+                    case "show_store_stock" : service.show_store_stock();break;
+                    case "show_storehouse_bank" : service.show_storehouse_bank();break;
+                    case "show_store_bank" : service.show_store_bank();break;
+                    case "collect_gain" : service.collect_gain();break;
+                    case "refill" : service.refill();break;
+                    case "find_provider" : service.find_provider();break;
+                    case "order" : service.order();break;
+                    case "sell" : service.sell();break;
+                    case "calculate_outprice" : service.calculate_outprice();break;
 
                     case "stop" : stop = true;
 
