@@ -7,26 +7,24 @@ public class Store {
 
     protected String address;
     protected StockManagement storeStock = new StockManagement();
-    protected int regularStock = 7; // regular amount of stock per product
-    protected int maxTotalStock = 100;
+    protected static final int regularStockSize = 7; // regular amount of stock per product
+    protected static final int maxTotalStockSize = 100;
     protected BigDecimal storeBank = new BigDecimal(0);
 
-    public Store(String address){
+    public Store(String address) {
         this.address = address;
 
     }
 
-    @Override
     public String toString() {
-        return address;
-//                ", storeStock=" + storeStock +
-//                ", regularStock=" + regularStock +
-//                ", maxTotalStock=" + maxTotalStock +
-//                ", storeBank=" + storeBank +
-//                '}';
+        return address + '\n' +
+                ", storeStock=" + storeStock +
+                ", regularStockSize=" + getRegularStockSize() +
+                ", maxTotalStockSize=" + getMaxTotalStockSize() +
+                ", storeBank=" + storeBank +
+                "}\n";
     }
 
-    int getRegularStock(){ return regularStock;};
     protected void setStoreStock(StockManagement initialStock) {
         this.storeStock = initialStock;
     }
@@ -84,12 +82,16 @@ public class Store {
 //        this.storeStock = storeStock;
 //    }
 
-//    public static int getRegularStock() {
-//        return regularStock;
-//    }
+    public static int getRegularStockSize() {
+        return regularStockSize;
+    }
 
     protected BigDecimal getStoreBank() {
         return storeBank;
+    }
+
+    public static int getMaxTotalStockSize() {
+        return maxTotalStockSize;
     }
 
 //    void setStoreBank(BigDecimal storeBank) {

@@ -5,11 +5,22 @@ import java.math.BigDecimal;
 public class Supermarket extends Store{
 
 
-    private final static int regularStock = 70; // regular amount of stock per product
-    private final static int maxTotalStock = 1000;
+    private static int regularStockSize =70; // regular amount of stock per product
+    private static int maxTotalStockSize = 1000;
 
     public Supermarket(String address){
         super(address);
+    }
+
+
+    @Override
+    public String toString() {
+        return address + '\n' +
+                ", storeStock=" + storeStock +
+                ", regularStockSize=" + getRegularStockSize() +
+                ", maxTotalStockSize=" + getMaxTotalStockSize() +
+                ", storeBank=" + storeBank +
+                "}\n";
     }
 
     @Override
@@ -39,7 +50,7 @@ public class Supermarket extends Store{
 
                 // daca a cumparat un nr semnificativ de produse de acelasi tip primeste discount
 
-                if(soldQuantity > 2 * regularStock / 3) {
+                if(soldQuantity > 2 * regularStockSize / 3) {
                     BigDecimal price = p.getStorePrice();
                     BigDecimal discount = price.multiply(new BigDecimal(3 / 100));
 
@@ -55,6 +66,14 @@ public class Supermarket extends Store{
                 this.storeStock.updateStock(p, -soldQuantity);
             }
         }
+    }
+
+    public static int getRegularStockSize() {
+        return regularStockSize;
+    }
+
+    public static int getMaxTotalStockSize() {
+        return maxTotalStockSize;
     }
 
 }

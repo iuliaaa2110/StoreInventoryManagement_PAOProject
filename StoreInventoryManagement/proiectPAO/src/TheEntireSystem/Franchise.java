@@ -83,14 +83,14 @@ public class Franchise {
 
     //Services:
     protected void refillProductStock(Store store, Product p){
-        this.refillProductStock(store, p, store.getRegularStock());
+        this.refillProductStock(store, p, store.getRegularStockSize());
     }
 
     protected void refillProductStock(Store store, Product p, int desiredQuantity){
 
         //doar daca in stock ul magazinului mai e loc
 
-        if(!store.storeStock.isFull(store.maxTotalStock)) {
+        if(!store.storeStock.isFull(store.getMaxTotalStockSize())) {
 
             Integer currentQuantity;
             Integer availableQuantity;
