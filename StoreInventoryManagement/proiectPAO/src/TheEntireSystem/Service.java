@@ -131,6 +131,9 @@ public class Service {
         Provider provider = franchise.getProviderById(nr);
         Product product = franchise.getProductById(nr1);
 
+        System.out.println(provider);
+        System.out.println(product);
+
         franchise.provide(provider, product, quantity);
 
     }
@@ -193,7 +196,7 @@ public class Service {
         System.out.println("Services:\n");
         System.out.println("Service1  = Show actual stock from the storeHouse \n" +
                 "Service2  = Show actual stock of a store \n" +
-                "Service3  = Show actual stock of the Storehouse \n" +
+                "Service3  = Show the main bank (the bank from the Storehouse) \n" +
                 "Service4  = Show the bank's gain of a store \n" +
                 "Service5  = Send the money from a store's bank to the StoreHouse's bank \n" +
                 "Service6  = Refill the stock at a store for specific products, inccreasing " +

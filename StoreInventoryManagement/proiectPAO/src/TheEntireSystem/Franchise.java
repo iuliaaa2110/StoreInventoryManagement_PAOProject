@@ -18,14 +18,15 @@ public class Franchise {
 
         FranchiseInit franchiseInit = new FranchiseInit();
 
-        // this.products = franchiseInit.initProducts();
-        // this.providers = franchiseInit.initProviders(products);
-        // this.franchisePoints  = franchiseInit.initFranchisePoints(products);
+//         this.products = franchiseInit.initProducts();
+//         this.providers = franchiseInit.initProviders(products);
+//         this.franchisePoints  = franchiseInit.initFranchisePoints(products);
+//        this.storeHouse = franchiseInit.initStoreHouse(providers, products);
 
         this.products = Read.readProducts();
-        this.providers = Read.readProviders();
+        this.providers = Read.readProviders(products);
         this.franchisePoints = Read.readStores();
-        this.storeHouse = franchiseInit.initStoreHouse(providers, products);
+        this.storeHouse = Read.readStoreHouse(products);
     }
 
     public static Franchise getInstance() {
@@ -71,7 +72,9 @@ public class Franchise {
     protected void refillProductStock(Store store, Product p, int desiredQuantity){
 
         //doar daca in stock ul magazinului mai e loc
-
+//        if(desiredQuantity + store.storeStock.actualStockSize() > store.getMaxTotalStockSize())
+//            System.out.println("Your requirement exceeds the capacity of the store stock. Trying to add jus");
+//
         if(!store.storeStock.isFull(store.getMaxTotalStockSize())) {
 
             Integer currentQuantity;
@@ -91,7 +94,12 @@ public class Franchise {
 
             if (neededQuantity == 0) {
                 System.out.println("Stock already full.");
-            } else {
+            }
+            else if(neededQuantity + store.storeStock.actualStockSize() > store.getMaxTotalStockSize()) {
+//                    neededQuantity = store.getMaxTotalStockSize() - store.storeStock.actualStockSize();
+                    System.out.println("Your requirement exceeds the capacity of the store stock.");
+                }
+            else {
                 if (availableQuantity >= neededQuantity) {
 
                     store.storeStock.updateStock(p, desiredQuantity);
@@ -120,10 +128,9 @@ public class Franchise {
 
     void provide(Provider provider, Product p, Integer neededQuantity) {
 
-        int maxTotalStock = 3000;
-        if (!storeHouse.mainStock.isFull(maxTotalStock)) {
+        if (!storeHouse.mainStock.isFull(storeHouse.getMaxTotalStock())) {
 
-            if ( provider.getOfferByProduct(p) == null)
+            if (provider.getOfferByProduct(p) == null)
                 System.out.println("This provider cannot help you this time :( !!");
             else {
                 OfferAndStock tuple = provider.getOfferByProduct(p);

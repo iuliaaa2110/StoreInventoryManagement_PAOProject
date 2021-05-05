@@ -11,9 +11,11 @@ public class StockManagement {
         this.stock = new HashMap<>();
     }
 
-    protected StockManagement(Map<Product, Integer> stock) {
+    public StockManagement(Map<Product, Integer> stock) {
         this.stock = stock;
     }
+
+    Integer stockSize = 0;
 
     @Override
     public String toString() {
@@ -35,9 +37,12 @@ public class StockManagement {
         return this.stock.get(p);
     }
 
+    protected Integer actualStockSize(){
+        return stock.values().stream().reduce(0, Integer::sum);
+    }
+
     protected Boolean isFull(int max){
-        Integer s = stock.values().stream().reduce(0, Integer::sum);
-        return s == max;
+        return actualStockSize() == max;
     }
 
     protected Boolean isEmpty(){

@@ -181,7 +181,7 @@ public class FranchiseInit {
         stock.updateStock(products.get(6), 3);
         stock.updateStock(products.get(10), 5);
 
-        return new StoreHouse(stock, new BigDecimal(1500));
+        return StoreHouse.getInstance(stock, new BigDecimal(1500));
     }
 
 }
