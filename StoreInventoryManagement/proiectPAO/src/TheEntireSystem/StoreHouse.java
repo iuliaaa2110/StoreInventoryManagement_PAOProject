@@ -5,10 +5,8 @@ import java.util.HashMap;
 
 public class StoreHouse {
 
-    protected StockManagement mainStock = new StockManagement(new HashMap<Product, Integer>()){};
+    protected StockManagement mainStock;
     protected BigDecimal mainBank;
-
-//    public StoreHouse(){};
 
     public StoreHouse(StockManagement mainStock, BigDecimal mainBank) {
         this.mainStock = mainStock;
@@ -19,8 +17,6 @@ public class StoreHouse {
         return mainBank;
     }
 
-
-    // incaseaza bani
     protected void collects( BigDecimal gain) {
         this.mainBank = this.mainBank.add(gain);
     }

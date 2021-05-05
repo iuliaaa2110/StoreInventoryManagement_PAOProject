@@ -11,8 +11,10 @@ public class Franchise {
     private final ArrayList<Provider> providers;
     private final ArrayList<Product> products;
 
+    private static Franchise instance = null;
+
     // Constructors
-    protected Franchise() {
+    private Franchise() {
 
         FranchiseInit franchiseInit = new FranchiseInit();
 
@@ -26,30 +28,10 @@ public class Franchise {
         this.storeHouse = franchiseInit.initStoreHouse(providers, products);
     }
 
-    protected Franchise(ArrayList<Product> products, ArrayList<Provider> providers, ArrayList<Store> franchisePoints
-            , StoreHouse storeHouse)
-    {
-        this.products = products;
-        this.providers = providers;
-        this.franchisePoints  = franchisePoints;
-        this.storeHouse = storeHouse;
-    }
-
-    // Setters and Getters
-    Store getStoreById(int nr){
-        return franchisePoints.get(nr);
-    }
-
-    Product getProductById(int nr){
-        return products.get(nr);
-    }
-
-    Provider getProviderById(int nr){
-        return providers.get(nr);
-    }
-
-    int getPointsNumber(){
-        return franchisePoints.size();
+    public static Franchise getInstance() {
+        if (instance == null)
+            instance = new Franchise();
+        return instance;
     }
 
     //Overloading
@@ -154,13 +136,10 @@ public class Franchise {
                     storeHouse.mainStock.updateStock(p, currentQuantity + neededQuantity);
                     provider.decreaseProductStock(p, neededQuantity);
 
-                    // traducere :)) :
-                    // mainBank -= (tuple.price * neededQuantity)
                     storeHouse.mainBank = storeHouse.mainBank.subtract(tuple.getPrice().multiply( new BigDecimal(neededQuantity)));
 
                     //product needs the provider price so it can calculate the storePrice for its own
                     p.setProviderPrice(tuple.getPrice());
-//                    p.setStorePrice();
 
                     System.out.println("The order of " + p.getProductName() + " successfully fulfilled.");
 
@@ -171,7 +150,6 @@ public class Franchise {
                     storeHouse.mainBank = storeHouse.mainBank.subtract( tuple.getPrice().multiply( new BigDecimal( availableQuantity)));
 
                     p.setProviderPrice(tuple.getPrice());
-//                    p.setStorePrice();
 
                     System.out.println("Could only get " + availableQuantity + " pieces of " + p.getProductName() +
                             ". The provider stock of" +
@@ -242,17 +220,41 @@ public class Franchise {
     // see the entry price and the out price of a product
     protected void setOutprice(Product product){
 
-        if(product.getProviderPrice() == null)
-            System.out.println("First you need to make an order for this product. Do it at Service 8 ");
-        else
-        {
-            BigDecimal providerPrice = product.getProviderPrice();
-            BigDecimal outprice = providerPrice.add(calculateAddition(providerPrice));
-            product.setStorePrice(outprice);
-
+        if(product.getStorePrice() != null)
             System.out.println("entryPrice = " + product.getProviderPrice() + "\noutPrice = "
                     + product.getStorePrice());
+        else
+        {
+            if(product.getProviderPrice() == null)
+                System.out.println("You have never ordered this product before so we don't have it in our database. " +
+                        "Find a provider at Service7 and order the product at Service 8. ");
+            else
+            {
+                BigDecimal providerPrice = product.getProviderPrice();
+                BigDecimal outprice = providerPrice.add(calculateAddition(providerPrice));
+                product.setStorePrice(outprice);
+
+                System.out.println("entryPrice = " + product.getProviderPrice() + "\noutPrice = "
+                        + product.getStorePrice());
+            }
         }
+    }
+
+    // Setters and Getters
+    Store getStoreById(int nr){
+        return franchisePoints.get(nr);
+    }
+
+    Product getProductById(int nr){
+        return products.get(nr);
+    }
+
+    Provider getProviderById(int nr){
+        return providers.get(nr);
+    }
+
+    int getPointsNumber(){
+        return franchisePoints.size();
     }
 
 }

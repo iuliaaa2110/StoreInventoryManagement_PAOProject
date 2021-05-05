@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class StockManagement {
 
-    private Map<Product, Integer> stock = new HashMap<>();
+    private Map<Product, Integer> stock;
 
     public StockManagement(){
         this.stock = new HashMap<>();
@@ -15,14 +15,9 @@ public class StockManagement {
         this.stock = stock;
     }
 
-    protected  Map <Product, Integer> getStock(){
-
-        return stock;
-    }
-
     @Override
     public String toString() {
-        return "StockManagement{" +
+        return "StockManagement {" +
                 "stock=" + stock +
                 '}';
     }
@@ -52,6 +47,10 @@ public class StockManagement {
         Integer s = stock.values().stream().reduce(0, Integer::sum);
 
         return s == 0;
+    }
+
+    protected  Map <Product, Integer> getStock(){
+        return stock;
     }
 
 }

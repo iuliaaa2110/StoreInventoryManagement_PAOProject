@@ -78,10 +78,6 @@ public class Store {
         this.address = address;
     }
 
-//    protected setStoreStock(TheEntireSystem.StockManagement storeStock) {
-//        this.storeStock = storeStock;
-//    }
-
     public static int getRegularStockSize() {
         return regularStockSize;
     }
@@ -93,10 +89,5 @@ public class Store {
     public static int getMaxTotalStockSize() {
         return maxTotalStockSize;
     }
-
-//    void setStoreBank(BigDecimal storeBank) {
-//        this.storeBank = storeBank;
-//    }
-
 
 }

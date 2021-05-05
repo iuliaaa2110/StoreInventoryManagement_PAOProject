@@ -13,16 +13,16 @@ import java.util.Map;
 
 
 public class Read {
-    private static Read instance = null;
-
-    private Read() {
-    }
-
-    public static Read getInstance() {
-        if (instance == null)
-            instance = new Read();
-        return instance;
-    }
+//    private static Read instance = null;
+//
+//    private Read() {
+//    }
+//
+//    public static Read getInstance() {
+//        if (instance == null)
+//            instance = new Read();
+//        return instance;
+//    }
 
     public static ArrayList<Product> readProducts(){
         try(var in = new BufferedReader(new FileReader("StoreInventoryManagement/proiectPAO/data/products.csv"))){
@@ -34,10 +34,12 @@ public class Read {
             while ( (line = in.readLine()) != null) {
                 String []fields = line.replaceAll(" ", "").split(",");
 
-                if(fields.length > 1)
+                if(fields.length == 3)
                     products.add(new Product(fields[0], new BigDecimal(fields[1]), new BigDecimal(fields[2])));
-                else
+                if(fields.length == 1)
                     products.add(new Product(fields[0]));
+                if(fields.length == 2)
+                    products.add(new Product(fields[0], new BigDecimal(fields[1])));
             }
 
             return products;
