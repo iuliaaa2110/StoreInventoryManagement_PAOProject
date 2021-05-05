@@ -1,8 +1,7 @@
 package CustomerView;
 
 import TheEntireSystem.Service;
-import TheEntireSystem.Store;
-
+import IO.Write;
 import java.util.Scanner;
 
 public class Main {
@@ -16,9 +15,9 @@ public class Main {
         while (!stop){
             System.out.println("\n~Enter the service you want to use: ");
             Scanner keyboard = new Scanner(System.in);
-            String serviceNumber = keyboard.nextLine();
+            String operation = keyboard.nextLine();
             try{
-                switch (serviceNumber) {
+                switch (operation) {
                     case "Service1" : service.Service1();break;
                     case "Service2" : service.Service2();break;
                     case "Service3" : service.Service3();break;
@@ -33,6 +32,7 @@ public class Main {
                     case "stop" : stop = true;
 
                 }
+                Write.writeAudit(operation);
             }catch (Exception e){
                 System.out.println(e.toString());
             }
