@@ -78,7 +78,7 @@ public class Store {
         this.address = address;
     }
 
-    public static int getRegularStockSize() {
+    protected int getRegularStockSize() {
         return regularStockSize;
     }
 
@@ -86,8 +86,11 @@ public class Store {
         return storeBank;
     }
 
-    public static int getMaxTotalStockSize() {
+    protected int getMaxTotalStockSize() {
         return maxTotalStockSize;
     }
 
+    public StockManagement getStoreStock() {
+        return storeStock;
+    }
 }

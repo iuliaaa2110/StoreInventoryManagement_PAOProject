@@ -68,11 +68,11 @@ public class Supermarket extends Store{
         }
     }
 
-    public static int getRegularStockSize() {
+    public int getRegularStockSize() {
         return regularStockSize;
     }
 
-    public static int getMaxTotalStockSize() {
+    public int getMaxTotalStockSize() {
         return maxTotalStockSize;
     }
 
