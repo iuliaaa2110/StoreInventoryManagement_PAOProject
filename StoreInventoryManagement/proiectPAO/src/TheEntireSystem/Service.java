@@ -12,12 +12,12 @@ public class Service {
 
 
     //   Show actual stock from the storeHouse
-    public void Service1 (){
+    public void show_storehouse_stock (){
         franchise.getStoreHouseStock();
     }
 
     //  Show actual stock of a store
-    public void Service2(){
+    public void show_store_stock(){
         System.out.println("Write the number of the store for which you wanna see the stock.\n");
 
         Scanner keyboard = new Scanner(System.in);
@@ -27,13 +27,13 @@ public class Service {
     }
 
     // Show the bank's gain at the storeHouse
-    public void Service3(){
+    public void show_storehouse_bank(){
         franchise.getStoreHouseGain();
 
     }
 
     // Show the bank's gain of a store
-    public void Service4(){
+    public void show_store_bank(){
         System.out.println("Write the number of the store for which you wanna see the bank's money.");
 
         Scanner keyboard = new Scanner(System.in);
@@ -43,7 +43,7 @@ public class Service {
     }
 
     // Send the money from a store's bank to the StoreHouse's bank
-    public void Service5(){
+    public void collect_gain(){
         System.out.println("\nWrite the number of the store who needs to send the money to the StoreHouse.");
 
         Scanner keyboard = new Scanner(System.in);
@@ -56,7 +56,7 @@ public class Service {
     }
 
     // Refill the stock at a store for specific franchise.products (with the regular quantity or with a specific quantity)
-    public void Service6(){
+    public void refill(){
 
         System.out.println("\nWrite the number of the store who needs the stock refill, \nthe number of the " +
                 "product you need to add, \n and optional: the final quantity you want to have. ");
@@ -100,7 +100,7 @@ public class Service {
     // cand nu mai avem in depozit un produs si vrem sa comandam de la un furnizor,
     // iteram prin ofertele furnizorilor si il alegem pe cel care vinde produsul mai ieftin
     // find the provider with the best price for a product
-    public void Service7() {
+    public void find_provider() {
         System.out.println("Write the number of the product you would want to order.");
 
         Scanner keyboard = new Scanner(System.in);
@@ -113,7 +113,7 @@ public class Service {
 
 
     // make an order to a provider
-    public void Service8(){
+    public void order(){
         System.out.println();
         System.out.println("Write the number of the provider you wanna buy from");
 
@@ -140,7 +140,7 @@ public class Service {
 
     // make a sell
     // if the client buys a significantly amount of items from a Supermarket he gets a discount
-    public void Service9(){
+    public void sell(){
         System.out.println("Type the number of the store where the sell occurs");
 
         Scanner keyboard = new Scanner(System.in);
@@ -180,7 +180,7 @@ public class Service {
     }
 
     // Calculate the outprice for a product
-    public void Service10(){
+    public void calculate_outprice(){
         System.out.println("Type the number of the product");
 
         Scanner keyboard = new Scanner(System.in);
@@ -194,17 +194,19 @@ public class Service {
         System.out.println(franchise);
 
         System.out.println("Services:\n");
-        System.out.println("Service1  = Show actual stock from the storeHouse \n" +
-                "Service2  = Show actual stock of a store \n" +
-                "Service3  = Show the main bank (the bank from the Storehouse) \n" +
-                "Service4  = Show the bank's gain of a store \n" +
-                "Service5  = Send the money from a store's bank to the StoreHouse's bank \n" +
-                "Service6  = Refill the stock at a store for specific products, inccreasing " +
+        System.out.println(
+                "1.  show_storehouse_stock = Show actual stock from the storeHouse \n" +
+                "2.  show_store_stock      = Show actual stock of a store \n" +
+                "3.  show_storehouse_bank  = Show the main bank (the bank from the Storehouse) \n" +
+                "4.  show_store_bank       = Show the bank's gain of a store \n" +
+                "5.  collect_gain          = Send the money from a store's bank to the StoreHouse's bank \n" +
+                "6.  refill                = Refill the stock at a store for specific products, inccreasing " +
                 "the stock to the desired quantity." +
                 "(either to the regular quantity, either to a specific quantity) \n" +
-                "Service7  = Find the provider with the best price for a product \n" +
-                "Service8  = Make an order to a provider \n" +
-                "Service9  = Make a sell \n" +
-                "Service10 = Calculate the outprice for a product \n");
+                "7.  find_provider         = Find the provider with the best price for a product \n" +
+                "8.  order                 = Make an order to a provider \n" +
+                "9.  sell                  = Make a sell \n" +
+                "10. calculate_outprice    = Calculate the outprice for a product \n");
+
     }
 }
