@@ -1,8 +1,8 @@
 package IO;
 
-import TheEntireSystem.Product;
-import TheEntireSystem.Provider;
-import TheEntireSystem.StoreHouse;
+import FranchiseSystem.Product;
+import ExternalComponents.Provider;
+import FranchiseSystem.StoreHouse;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
