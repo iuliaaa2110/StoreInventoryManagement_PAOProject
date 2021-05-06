@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.Map;
 import FranchiseSystem.StockManagement;
 
-// as prefera s-o fac statica decat singleton..
 public class Read {
     private static Read instance = null;
 
