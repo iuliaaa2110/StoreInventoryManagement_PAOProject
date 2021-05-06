@@ -1,18 +1,19 @@
 package IO;
 
-import TheEntireSystem.*;
+import ExternalComponents.OfferAndStock;
+import FranchiseSystem.Product;
+import ExternalComponents.Provider;
+import FranchiseSystem.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import TheEntireSystem.StockManagement;
+import FranchiseSystem.StockManagement;
 
-// as prefera s-o fac statica decat singleton..
 public class Read {
     private static Read instance = null;
 

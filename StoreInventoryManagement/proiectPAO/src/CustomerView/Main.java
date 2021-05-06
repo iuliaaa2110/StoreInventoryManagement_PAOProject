@@ -1,6 +1,6 @@
 package CustomerView;
 
-import TheEntireSystem.Service;
+import FranchiseSystem.Service;
 import IO.Write;
 import java.util.Scanner;
 

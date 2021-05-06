@@ -1,4 +1,7 @@
-package TheEntireSystem;
+package FranchiseSystem;
+
+import ExternalComponents.OfferAndStock;
+import ExternalComponents.Provider;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
