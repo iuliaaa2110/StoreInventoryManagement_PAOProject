@@ -25,15 +25,15 @@ public class Provider {
 
     public String Columns(){
 
-        String s = name + ",";
+        StringBuilder s = new StringBuilder(name + ",");
 
         for(Map.Entry<Product, OfferAndStock> entry : offers.entrySet()){
             Product p = entry.getKey();
             OfferAndStock o = entry.getValue();
-            s += p.getProductName() + "=" + o.getPrice() + ";" + o.getStock() +"/";
+            s.append(p.getProductName()).append("=").append(o.getPrice()).append(";").append(o.getStock()).append("/");
         }
 
-        return s;
+        return s.toString();
     }
 
     @Override

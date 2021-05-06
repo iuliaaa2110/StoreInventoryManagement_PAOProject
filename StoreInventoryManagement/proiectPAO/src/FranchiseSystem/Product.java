@@ -57,6 +57,7 @@ public class Product {
         return productName + "," + providerPrice + "," + storePrice;
     }
 
+
     public String getProductName() {
         return productName;
     }

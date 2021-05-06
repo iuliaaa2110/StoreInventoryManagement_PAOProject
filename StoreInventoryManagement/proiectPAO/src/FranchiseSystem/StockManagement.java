@@ -1,5 +1,7 @@
 package FranchiseSystem;
 
+import ExternalComponents.OfferAndStock;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +24,18 @@ public class StockManagement {
         return "StockManagement {" +
                 "stock=" + stock +
                 '}';
+    }
+
+    public String Columns() {
+        StringBuilder s = new StringBuilder();
+
+        for(Map.Entry<Product, Integer> entry : stock.entrySet()){
+            Product p = entry.getKey();
+            Integer quantity = entry.getValue();
+            s.append(p.getProductName()).append(",").append(quantity).append("\n");
+        }
+
+        return s.toString();
     }
 
     // either add new pair (if the product does not exist in the stock), either modify the quantity of the product

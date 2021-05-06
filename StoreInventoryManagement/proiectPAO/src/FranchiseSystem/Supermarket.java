@@ -9,10 +9,15 @@ public class Supermarket extends Store{
         regularStockSize = 70;
         maxTotalStockSize = 1000;
     }
-    public Supermarket(String address, BigDecimal storeBank, StockManagement storeStock) {
-        super(address);
+    public Supermarket(String address, BigDecimal storeBank, StockManagement storeStock, String stockManagemenCSV) {
+        super(address, storeBank, storeStock, stockManagemenCSV);
         regularStockSize = 70;
         maxTotalStockSize = 1000;
+    }
+
+    @Override
+    public String Columns(){
+        return address + ",SP," + storeBank + "," + stockManagementCSV;
     }
 
     @Override

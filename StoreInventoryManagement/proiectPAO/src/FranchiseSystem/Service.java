@@ -54,7 +54,7 @@ public class Service {
                 "product you need to add, \n and optional: the final quantity you want to have.\n");
         System.out.println("With spaces between!");
         System.out.println("You can do that all over again. Just press '.' when you re done.\n");
-        System.out.println("Example: 2 Watter 25");
+        System.out.println("Example: 2 MineralWatter 3");
 
         Scanner keyboard = new Scanner(System.in);
         String st = keyboard.nextLine();
