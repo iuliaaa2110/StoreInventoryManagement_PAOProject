@@ -3,24 +3,11 @@ package TheEntireSystem;
 import java.math.BigDecimal;
 
 public class Supermarket extends Store{
-
-
-    private static final int regularStockSize = 70; // regular amount of stock per product
-    private static final int maxTotalStockSize = 1000;
-
+    
     public Supermarket(String address){
         super(address);
-    }
-
-
-    @Override
-    public String toString() {
-        return address + '\n' +
-                ", storeStock=" + storeStock +
-                ", regularStockSize=" + getRegularStockSize() +
-                ", maxTotalStockSize=" + getMaxTotalStockSize() +
-                ", storeBank=" + storeBank +
-                "}\n";
+        regularStockSize = 70;
+        maxTotalStockSize = 1000;
     }
 
     @Override

@@ -7,8 +7,8 @@ public class Store {
 
     protected String address;
     protected StockManagement storeStock = new StockManagement();
-    protected static int regularStockSize = 7; // regular amount of stock per product
-    protected static int maxTotalStockSize = 100;
+    protected int regularStockSize = 7; // regular amount of stock per product
+    protected int maxTotalStockSize = 100;
     protected BigDecimal storeBank = new BigDecimal(0);
 
     public Store(String address) {
