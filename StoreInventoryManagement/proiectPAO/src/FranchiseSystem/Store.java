@@ -10,16 +10,18 @@ public class Store {
     protected int regularStockSize = 7; // regular amount of stock per product
     protected int maxTotalStockSize = 100;
     protected BigDecimal storeBank = new BigDecimal(0);
+    protected String stockManagementCSV;
 
     public Store(String address) {
         this.address = address;
 
     }
 
-    public Store(String address, BigDecimal storeBank, StockManagement storeStock){
+    public Store(String address, BigDecimal storeBank, StockManagement storeStock, String stockManagemenCSV){
         this.address = address;
         this.storeBank = storeBank;
         this.storeStock = storeStock;
+        this.stockManagementCSV = stockManagemenCSV;
     }
 
     public String toString() {
@@ -29,6 +31,14 @@ public class Store {
                 ", maxTotalStockSize=" + getMaxTotalStockSize() +
                 ", storeBank=" + storeBank +
                 "}\n";
+    }
+
+    public String Columns(){
+        return address + ",ST," + storeBank + "," + stockManagementCSV;
+    }
+
+    public String stockColumns(){
+        return storeStock.Columns();
     }
 
     protected void setStoreStock(StockManagement initialStock) {
@@ -90,5 +100,9 @@ public class Store {
 
     protected int getMaxTotalStockSize() {
         return maxTotalStockSize;
+    }
+
+    public String getStockManagementCSV() {
+        return stockManagementCSV;
     }
 }

@@ -258,6 +258,7 @@ public class Franchise {
         write.writeProducts(products);
         write.writeStorehouse(storeHouse);
         write.writeProviders(providers);
+        write.writePoints(franchisePoints);
     }
 
     Store getStoreById(int nr){

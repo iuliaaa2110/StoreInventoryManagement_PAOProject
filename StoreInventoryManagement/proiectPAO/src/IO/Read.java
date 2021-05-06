@@ -41,7 +41,9 @@ public class Read {
                 if(fields.length == 1)
                     products.add(new Product(fields[0]));
                 if(fields.length == 2)
-                    products.add(new Product(fields[0], new BigDecimal(fields[1])));
+                {
+                    System.out.println(fields[1]);
+                products.add(new Product(fields[0], new BigDecimal(fields[1])));}
             }
 
             return products;
@@ -107,13 +109,13 @@ public class Read {
 
             while ( (line = in.readLine()) != null) {
                 String []fields = line.replaceAll(" ", "").split(",");
-
-                StockManagement stockManagement = readStockManagement("StoreInventoryManagement/proiectPAO/data/StockManagementCSVs/" + fields[3], products);
+                String path = "StoreInventoryManagement/proiectPAO/data/StockManagementCSVs/" + fields[3];
+                StockManagement stockManagement = readStockManagement(path , products);
 
                 if(fields[1].equals("ST"))
-                    stores.add(new Store(fields[0], new BigDecimal(fields[2]), stockManagement));
+                    stores.add(new Store(fields[0], new BigDecimal(fields[2]), stockManagement, fields[3]));
                 else
-                    stores.add(new Supermarket(fields[0], new BigDecimal(fields[2]), stockManagement));
+                    stores.add(new Supermarket(fields[0], new BigDecimal(fields[2]), stockManagement, fields[3]));
             }
 
             return stores;
@@ -134,22 +136,19 @@ public class Read {
             while ( (line = in.readLine()) != null) {
                 String []fields = line.replaceAll(" ", "").split(",");
 
-                if(fields.length != 4)
+                if(fields.length != 1)
                     System.out.println("Datele de intrare nu sunt in formatul corect!");
 
-                Product product = new Product(fields[0], new BigDecimal(fields[1]), new BigDecimal(fields[2]));
+                Product product = new Product(fields[0]);
                 int i;
 
                 if(products.contains(product)) {
                     i = products.indexOf(product);
-                    product = products.get(i);
+                    stock.put(products.get(i), Integer.parseInt(fields[1]));
                 }
                 else{
-                    products.add(product);
+                    System.out.println("Unknown product!");
                 }
-
-                stock.put(product, Integer.parseInt(fields[3]));
-
             }
 
             return new StockManagement(stock);

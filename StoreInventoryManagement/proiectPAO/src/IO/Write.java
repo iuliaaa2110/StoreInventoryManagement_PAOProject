@@ -2,6 +2,7 @@ package IO;
 
 import FranchiseSystem.Product;
 import ExternalComponents.Provider;
+import FranchiseSystem.Store;
 import FranchiseSystem.StoreHouse;
 
 import java.io.BufferedWriter;
@@ -64,10 +65,39 @@ public class Write {
             writer.write(storehouse.Columns());
             writer.write("\n");
 
+            writeStockManagement(storehouse.getStockManagementCSV(), storehouse.stockColumns());
+
             writer.close();
         }
         catch (IOException e){
             System.out.println(e.toString());
         }
     }
+
+    public void writePoints(ArrayList<Store> points){
+        try{
+            var writer = new FileWriter("StoreInventoryManagement/proiectPAO/data/stores.csv");
+            for(var point : points){
+                writer.write(point.Columns());
+                writer.write("\n");
+
+                writeStockManagement(point.getStockManagementCSV(), point.stockColumns());
+            }
+            writer.close();
+        }catch (IOException e){
+            System.out.println(e.toString());
+        }
+    }
+
+    public void writeStockManagement(String file, String output){
+        try{
+            var writer = new FileWriter("StoreInventoryManagement/proiectPAO/data/StockManagementCSVs/" + file);
+            writer.write(output);
+            writer.close();
+        }
+        catch (IOException e){
+            System.out.println(e.toString());
+        }
+    }
+    // WriteStores??
 }

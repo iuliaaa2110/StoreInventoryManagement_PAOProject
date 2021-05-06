@@ -26,6 +26,10 @@ public class StoreHouse {
         return mainBank + "," + stockManagementCSV;
     }
 
+    public String stockColumns(){
+        return mainStock.Columns();
+    }
+
     public BigDecimal getMainBank() {
         return mainBank;
     }
@@ -36,5 +40,9 @@ public class StoreHouse {
 
     public int getMaxTotalStock() {
         return maxTotalStock;
+    }
+
+    public String getStockManagementCSV() {
+        return stockManagementCSV;
     }
 }
