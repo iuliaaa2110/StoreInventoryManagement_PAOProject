@@ -99,5 +99,4 @@ public class Write {
             System.out.println(e.toString());
         }
     }
-    // WriteStores??
 }
