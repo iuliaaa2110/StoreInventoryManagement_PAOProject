@@ -32,7 +32,7 @@ public class Franchise {
 
         this.products = read.readProducts();
         this.providers = read.readProviders(products);
-        this.franchisePoints = read.readStores();
+        this.franchisePoints = read.readStores(products);
         this.storeHouse = read.readStoreHouse(products);
     }
 

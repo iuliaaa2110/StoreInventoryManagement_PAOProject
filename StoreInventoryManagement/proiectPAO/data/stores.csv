@@ -1,5 +1,5 @@
-Houston Street 0, SP
-Sunset Boulevard 1, ST
-N Benedict Canon Drive 2, ST
-Rodeo Drive 3, ST
-Wall Street 4, SP
+Houston Street 0, SP, 100, StockManagement1.csv
+Sunset Boulevard 1, ST,500, StockManagement2.csv
+N Benedict Canon Drive 2, ST,0, StockManagement3.csv
+Rodeo Drive 3, ST,0, StockManagement4.csv
+Wall Street 4, SP,0, StockManagement5.csv

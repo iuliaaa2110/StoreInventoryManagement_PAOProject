@@ -99,7 +99,7 @@ public class Read {
         }
     }
 
-    public ArrayList<Store> readStores(){
+    public ArrayList<Store> readStores(ArrayList<Product> products){
         try(var in = new BufferedReader(new FileReader("StoreInventoryManagement/proiectPAO/data/stores.csv"))){
             String line;
 
@@ -108,10 +108,12 @@ public class Read {
             while ( (line = in.readLine()) != null) {
                 String []fields = line.replaceAll(" ", "").split(",");
 
+                StockManagement stockManagement = readStockManagement("StoreInventoryManagement/proiectPAO/data/StockManagementCSVs/" + fields[3], products);
+
                 if(fields[1].equals("ST"))
-                    stores.add(new Store(fields[0]));
+                    stores.add(new Store(fields[0], new BigDecimal(fields[2]), stockManagement));
                 else
-                    stores.add(new Supermarket(fields[0]));
+                    stores.add(new Supermarket(fields[0], new BigDecimal(fields[2]), stockManagement));
             }
 
             return stores;
@@ -167,7 +169,7 @@ public class Read {
             if ((line = in.readLine()) != null){
                 String []fields = line.replaceAll(" ", "").split(",");
 
-                String stockPath ="StoreInventoryManagement/proiectPAO/data/" + fields[1];
+                String stockPath ="StoreInventoryManagement/proiectPAO/data/StockManagementCSVs/" + fields[1];
 
                 return StoreHouse.getInstance(readStockManagement(stockPath, products), new BigDecimal(fields[0]),  fields[1]);
             }

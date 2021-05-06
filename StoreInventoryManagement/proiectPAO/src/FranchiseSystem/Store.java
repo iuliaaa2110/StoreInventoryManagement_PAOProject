@@ -16,6 +16,12 @@ public class Store {
 
     }
 
+    public Store(String address, BigDecimal storeBank, StockManagement storeStock){
+        this.address = address;
+        this.storeBank = storeBank;
+        this.storeStock = storeStock;
+    }
+
     public String toString() {
         return address + '\n' +
                 ", storeStock=" + storeStock +

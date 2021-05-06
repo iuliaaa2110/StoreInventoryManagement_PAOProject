@@ -9,6 +9,11 @@ public class Supermarket extends Store{
         regularStockSize = 70;
         maxTotalStockSize = 1000;
     }
+    public Supermarket(String address, BigDecimal storeBank, StockManagement storeStock) {
+        super(address);
+        regularStockSize = 70;
+        maxTotalStockSize = 1000;
+    }
 
     @Override
     protected void Sell(Product p, Integer requiredQuantity){
