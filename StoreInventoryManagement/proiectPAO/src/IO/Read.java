@@ -81,7 +81,7 @@ public class Read {
                         product = products.get(i);
                     }
                     else{
-                        products.add(product);
+                        System.out.println("Unknown product: " + s[0]);
                     }
 
                     String []price_stock = s[1].replaceAll(" ", "").split(";");
@@ -147,7 +147,7 @@ public class Read {
                     stock.put(products.get(i), Integer.parseInt(fields[1]));
                 }
                 else{
-                    System.out.println("Unknown product!");
+                    System.out.println("Unknown product: " + fields[0]);
                 }
             }
 
