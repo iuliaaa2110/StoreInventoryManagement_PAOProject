@@ -93,7 +93,7 @@ public class Store {
         return storeStock.actualStockSize();
     }
 
-    public String getAddress() {
+    protected String getAddress() {
         return address;
     }
 

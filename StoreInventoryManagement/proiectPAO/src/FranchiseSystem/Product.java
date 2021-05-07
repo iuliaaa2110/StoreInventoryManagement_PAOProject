@@ -30,12 +30,11 @@ public class Product {
         // return productName + " (entryPrice = " + providerPrice + "; outPrice = " + storePrice +")";
     }
 
-    // Utils:
     BigDecimal calculateAddition(BigDecimal initialPrice){
         return initialPrice.multiply(new BigDecimal(7)).divide(new BigDecimal(100));   // addition price = 7%
     }
 
-    public String getProductName() {
+    protected String getProductName() {
         return productName;
     }
 

@@ -6,7 +6,7 @@ public class StoreHouse {
 
     int maxTotalStock = 3000;
     protected StockManagement mainStock;
-    protected BigDecimal mainBank;
+    private BigDecimal mainBank;
     private static StoreHouse instance = null;
     String stockManagementCSV;
 
@@ -30,15 +30,19 @@ public class StoreHouse {
         return mainStock.Columns();
     }
 
-    public BigDecimal getMainBank() {
-        return mainBank;
+    protected BigDecimal getMainBank() {
+        return new BigDecimal(String.valueOf(mainBank));
+    }
+
+    protected void setMainBank(BigDecimal val) {
+        this.mainBank = new BigDecimal(String.valueOf(val));
     }
 
     protected void collects(BigDecimal gain) {
         this.mainBank = this.mainBank.add(gain);
     }
 
-    public int getMaxTotalStock() {
+    protected int getMaxTotalStock() {
         return maxTotalStock;
     }
 

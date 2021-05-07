@@ -1,7 +1,5 @@
 package FranchiseSystem;
 
-import ExternalComponents.OfferAndStock;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,8 +15,6 @@ public class StockManagement {
         this.stock = stock;
         calculateOutprice(); // doar aici am voie sa am acces la outprice-uri, nu si in read.
     }
-
-    Integer stockSize = 0;
 
     @Override
     public String toString() {
@@ -89,7 +85,6 @@ public class StockManagement {
     private void calculateOutprice(){
         for(Map.Entry<Product, Integer> entry : stock.entrySet()){
             Product p = entry.getKey();
-            Integer quantity = entry.getValue();
 
             if(p.getStorePrice() == null)
                 p.calculateOutprice();

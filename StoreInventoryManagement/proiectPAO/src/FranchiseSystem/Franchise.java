@@ -155,14 +155,14 @@ public class Franchise {
 
                     storeHouse.mainStock.updateStock(p, currentQuantity + neededQuantity);
                     provider.decreaseProductStock(productName, neededQuantity);
-                    storeHouse.mainBank = storeHouse.mainBank.subtract(offer.getPrice().multiply(new BigDecimal(neededQuantity)));
+                    storeHouse.setMainBank(storeHouse.getMainBank().subtract(offer.getPrice().multiply(new BigDecimal(neededQuantity))));
                     System.out.println("The order of " + p.getProductName() + " successfully fulfilled.");
 
                 } else {
 
                     storeHouse.mainStock.updateStock(p, currentQuantity + availableQuantity);
                     provider.decreaseProductStock(productName, availableQuantity);
-                    storeHouse.mainBank = storeHouse.mainBank.subtract(offer.getPrice().multiply(new BigDecimal(availableQuantity)));
+                    storeHouse.setMainBank(storeHouse.getMainBank().subtract(offer.getPrice().multiply(new BigDecimal(availableQuantity))));
                     System.out.println("Could only get " + availableQuantity + " pieces of " + p.getProductName() +
                             ". The provider stock of" +
                             p.getProductName() + " is empty now.");
