@@ -8,10 +8,6 @@ public class Product {
     private BigDecimal providerPrice;
     private BigDecimal storePrice;
 
-    public Product(String name){
-        this.productName = name;
-    }
-
     public Product(String productName, BigDecimal providerPrice) {
         this.productName = productName;
         this.providerPrice = providerPrice;
