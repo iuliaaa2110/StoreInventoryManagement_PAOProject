@@ -68,13 +68,19 @@ public class Franchise {
         Product shp = storeHouse.getProductByName(productName);
         Product p = store.getProductByName(productName);
 
-        // daca nu exista acest produs in store, il adaug
-        if(p == null) {
-            p = new Product(shp);
-            store.storeStock.updateStock(p, 0);
+        if(shp == null) {
+            System.out.println("This product is not in the main stock. Try to order it from a provider first.");
         }
+        else if(store.storeStock.isFull(store.getMaxTotalStockSize())){
+            System.out.println("No more free space in the store for bringing other items :( .");
+        }
+        else{
+            // daca nu exista acest produs in store, il adaug
+            if(p == null) {
+                p = new Product(shp);
+                store.storeStock.updateStock(p, 0);
+            }
 
-        if(!store.storeStock.isFull(store.getMaxTotalStockSize())) {
             Integer currentQuantity;
             Integer availableQuantity;
 
@@ -110,15 +116,13 @@ public class Franchise {
                 // Daca l-am cumparat la acelasi pret sau mai ieftin, pretul de iesire ramane neschimbat
                 // nu putem sa avem acelasi produs in magazin cu preturi amestsecate.
                 if(shp.getProviderPrice().compareTo(p.getProviderPrice()) > 0) {
-                    System.out.println("in the meantime this product's offer has changed. We will sell it at a new price from now");
+                    System.out.println("\nIn the meantime this product's offer has changed. We will sell it at a new price from now");
                     p.setProviderPrice(new BigDecimal(String.valueOf(shp.getProviderPrice())));
                     p.calculateOutprice();
                 }
 
             }
         }
-        else
-            System.out.println("No more free space in the store for bringing other items :( .");
     }
 
     // trimite banii incasati la depozitul central (storehouse)

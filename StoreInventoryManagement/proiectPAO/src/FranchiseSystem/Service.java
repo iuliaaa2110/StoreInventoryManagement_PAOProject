@@ -136,6 +136,11 @@ public class Service {
 
             while (!fields[0].equals(".")) {
 
+                if(fields.length != 2){
+                    System.out.println("Wrong format");
+                    break;
+                }
+
                 myMap.put(fields[0], Integer.parseInt(fields[1]));
                 fields = keyboard.nextLine().trim().split(" ");
             }
