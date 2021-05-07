@@ -241,6 +241,8 @@ public class Franchise {
     }
 
     Store getStoreById(int nr){
+        if(nr > franchisePoints.size() || nr < 0)
+            return null;
         return franchisePoints.get(nr);
     }
 
