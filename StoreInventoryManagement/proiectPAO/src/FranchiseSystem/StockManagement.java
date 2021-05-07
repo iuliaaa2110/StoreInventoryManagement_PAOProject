@@ -75,7 +75,6 @@ public class StockManagement {
 
         for (Map.Entry<Product, Integer> e : stock.entrySet()) {
             Product product   = e.getKey();
-            Integer quantity = e.getValue();
 
             if(product.getProductName().equals(name))
             {
