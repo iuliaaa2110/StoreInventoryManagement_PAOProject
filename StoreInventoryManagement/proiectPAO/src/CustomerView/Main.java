@@ -27,9 +27,10 @@ public class Main {
                     case "find_provider" : service.find_provider();break;
                     case "order" : service.order();break;
                     case "sell" : service.sell();break;
-                    case "calculate_outprice" : service.calculate_outprice();break;
-
+                    case "show_outprice" : service.show_outprice();break;
+                    case "show_capacity_status" : service.show_capacity_status();break;
                     case "stop" : stop = true;
+                    default: System.out.println("Wrong command");break;
 
                 }
                 Write.writeAudit(operation);

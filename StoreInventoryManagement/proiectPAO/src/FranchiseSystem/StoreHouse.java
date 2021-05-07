@@ -45,4 +45,8 @@ public class StoreHouse {
     public String getStockManagementCSV() {
         return stockManagementCSV;
     }
+
+    protected Product getProductByName(String name){
+        return mainStock.getProductByName(name);
+    }
 }

@@ -3,17 +3,18 @@ package ExternalComponents;
 import FranchiseSystem.Product;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Provider {
     private final String name;
-    private Map<Product, OfferAndStock> offers;
+    private HashMap<String, OfferAndStock> offers;
 
     public Provider(String name) {
         this.name = name;
     }
 
-    public Provider(String name, Map<Product, OfferAndStock> offers) {
+    public Provider(String name, HashMap<String, OfferAndStock> offers) {
         this.name = name; this.offers = offers;
     }
     
@@ -27,10 +28,10 @@ public class Provider {
 
         StringBuilder s = new StringBuilder(name + ",");
 
-        for(Map.Entry<Product, OfferAndStock> entry : offers.entrySet()){
-            Product p = entry.getKey();
+        for(HashMap.Entry<String, OfferAndStock> entry : offers.entrySet()){
+            String p = entry.getKey();
             OfferAndStock o = entry.getValue();
-            s.append(p.getProductName()).append("=").append(o.getPrice()).append(";").append(o.getStock()).append("/");
+            s.append(p).append("=").append(o.getPrice()).append(";").append(o.getStock()).append("/");
         }
 
         return s.toString();
@@ -55,17 +56,17 @@ public class Provider {
         return this.name.equals(p.name);
     }
 
-    public void decreaseProductStock(Product p, int toDecrease){
+    public void decreaseProductStock(String p, int toDecrease){
         OfferAndStock tuple = this.offers.get(p);
         tuple.setStock(tuple.getStock() - toDecrease);
         this.offers.put(p, tuple);
     }
 
-    public OfferAndStock getOfferByProduct(Product p){
+    public OfferAndStock getOfferByProduct(String p){
         return this.offers.get(p);
     }
 
-    public BigDecimal getPrice(Product p){
+    public BigDecimal getPrice(String p){
         if(offers.get(p) == null)
             return new BigDecimal(0);
         return offers.get(p).getPrice();

@@ -21,10 +21,12 @@ public class Supermarket extends Store{
     }
 
     @Override
-    protected void Sell(Product p, Integer requiredQuantity){
-        if(this.storeStock.getProductStock(p) == 0) {
+    protected void Sell(String productName, Integer requiredQuantity){
+        Product p = getProductByName(productName);
 
-            System.out.println("Sorry. We are sold out for this product: " + p.getProductName() +" . We will bring more of it soon!");
+        if(p == null || this.storeStock.getProductStock(p) == 0) {
+
+            System.out.println("Sorry. We are sold out for this product: " + productName +" . We will bring more of it soon!");
         }
         else {
             if(p.getStorePrice() == null)
@@ -36,7 +38,7 @@ public class Supermarket extends Store{
                 if (requiredQuantity <= actualQuantity) {
                     soldQuantity = requiredQuantity;
 
-                    System.out.println("Successfully sold. ");
+                    System.out.println(productName + ": Successfully sold. ");
                 } else {
                     soldQuantity = actualQuantity;
 

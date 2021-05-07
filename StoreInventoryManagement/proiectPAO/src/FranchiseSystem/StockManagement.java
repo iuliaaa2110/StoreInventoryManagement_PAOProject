@@ -15,6 +15,7 @@ public class StockManagement {
 
     public StockManagement(Map<Product, Integer> stock) {
         this.stock = stock;
+        calculateOutprice(); // doar aici am voie sa am acces la outprice-uri, nu si in read.
     }
 
     Integer stockSize = 0;
@@ -66,6 +67,34 @@ public class StockManagement {
         Integer s = stock.values().stream().reduce(0, Integer::sum);
 
         return s == 0;
+    }
+
+    protected Product getProductByName(String name){
+
+        Product found = null;
+
+        for (Map.Entry<Product, Integer> e : stock.entrySet()) {
+            Product product   = e.getKey();
+            Integer quantity = e.getValue();
+
+            if(product.getProductName().equals(name))
+            {
+                found = product;
+                break;
+            }
+        }
+
+        return found;
+    }
+
+    private void calculateOutprice(){
+        for(Map.Entry<Product, Integer> entry : stock.entrySet()){
+            Product p = entry.getKey();
+            Integer quantity = entry.getValue();
+
+            if(p.getStorePrice() == null)
+                p.calculateOutprice();
+        }
     }
 
     protected  Map <Product, Integer> getStock(){

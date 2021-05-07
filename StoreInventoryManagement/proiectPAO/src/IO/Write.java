@@ -33,18 +33,18 @@ public class Write {
         }
     }
 
-    public void writeProducts(ArrayList<Product> products){
-        try{
-            var writer = new FileWriter("StoreInventoryManagement/proiectPAO/data/products.csv");
-            for(var product : products){
-                writer.write(product.Columns());
-                writer.write("\n");
-            }
-            writer.close();
-        }catch (IOException e){
-            System.out.println(e.toString());
-        }
-    }
+//    public void writeProducts(ArrayList<Product> products){
+//        try{
+//            var writer = new FileWriter("StoreInventoryManagement/proiectPAO/data/products.csv");
+//            for(var product : products){
+//                writer.write(product.Columns());
+//                writer.write("\n");
+//            }
+//            writer.close();
+//        }catch (IOException e){
+//            System.out.println(e.toString());
+//        }
+//    }
 
     public void writeProviders(ArrayList<Provider> providers){
         try{

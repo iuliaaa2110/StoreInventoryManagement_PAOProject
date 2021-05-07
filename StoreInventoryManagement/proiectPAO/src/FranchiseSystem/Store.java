@@ -33,6 +33,26 @@ public class Store {
                 "}\n";
     }
 
+    // De adaptat:
+    //    @Override
+//    public boolean equals(Object o){
+//        // If the object is compared with itself then return true
+//        if (o == this) {
+//            return true;
+//        }
+//
+//        /* Check if o is an instance of Complex or not
+//          "null instanceof [type]" also returns false */
+//        if (!(o instanceof Product)) {
+//            return false;
+//        }
+//
+//        // typecast o to Complex so that we can compare data members
+//        Product p = (Product) o;
+//
+//        return this.productName.equals(p.productName);
+//    }
+
     public String Columns(){
         return address + ",ST," + storeBank + "," + stockManagementCSV;
     }
@@ -45,10 +65,13 @@ public class Store {
         this.storeStock = initialStock;
     }
 
-    protected void Sell(Product p, Integer requiredQuantity){
-        if(this.storeStock.getProductStock(p) == 0) {
+    protected void Sell(String productName, Integer requiredQuantity){
+        Product p = getProductByName(productName);
 
-            System.out.println("Sorry. We are sold out for this product: " + p.getProductName() +" . We will bring more of it soon!");
+        if(p == null || this.storeStock.getProductStock(p) == 0) {
+
+            System.out.println("Sorry. We are sold out for this product: " + productName
+                    +" . We will bring more of it soon!");
         }
         else {
             if(p.getStorePrice() == null)
@@ -62,7 +85,7 @@ public class Store {
                     this.storeBank = this.storeBank.add(p.getStorePrice().multiply(new BigDecimal(requiredQuantity)));
                     this.storeStock.updateStock(p, -requiredQuantity);
 
-                    System.out.println("Successfully sold. ");
+                    System.out.println(productName + ": Successfully sold. ");
                 } else {
 
                     this.storeBank = this.storeBank.add(p.getStorePrice().multiply(new BigDecimal(actualQuantity)));
@@ -77,13 +100,17 @@ public class Store {
         }
     }
 
-    protected void variedSell( Map<Product, Integer> products){
-        for (Map.Entry<Product, Integer> e : products.entrySet()) {
-            Product key    = e.getKey();
+    protected void variedSell( HashMap<String, Integer> products){
+        for (Map.Entry<String, Integer> e : products.entrySet()) {
+            String key    = e.getKey();
             Integer value  = e.getValue();
 
             Sell(key, value);
         }
+    }
+
+    protected Integer getActualStockSize(){
+        return storeStock.actualStockSize();
     }
 
     public String getAddress() {
@@ -104,5 +131,9 @@ public class Store {
 
     public String getStockManagementCSV() {
         return stockManagementCSV;
+    }
+
+    protected Product getProductByName(String name){
+        return storeStock.getProductByName(name);
     }
 }

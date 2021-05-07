@@ -11,9 +11,7 @@ import IO.Write;
 public class Franchise {
     private final ArrayList<Store> franchisePoints;
     private final StoreHouse storeHouse;
-
     private final ArrayList<Provider> providers;
-    private final ArrayList<Product> products;
 
     private static Franchise instance = null;
 
@@ -30,10 +28,10 @@ public class Franchise {
 //         this.franchisePoints  = franchiseInit.initFranchisePoints(products);
 //        this.storeHouse = franchiseInit.initStoreHouse(providers, products);
 
-        this.products = read.readProducts();
-        this.providers = read.readProviders(products);
-        this.franchisePoints = read.readStores(products);
-        this.storeHouse = read.readStoreHouse(products);
+
+        this.providers = read.readProviders();
+        this.franchisePoints = read.readStores();
+        this.storeHouse = read.readStoreHouse();
     }
 
     public static Franchise getInstance() {
@@ -45,11 +43,6 @@ public class Franchise {
     //Overloading
     public String toString() {
         StringBuilder s = new StringBuilder();
-
-        s.append("\nProducts:\n\n");
-        for (int i = 0; i < products.size(); i ++) {
-            s.append(i).append(".").append(products.get(i)).append("; ");
-        }
 
         s.append("\n\nProviders:\n\n");
         for (int i = 0; i < providers.size(); i ++) {
@@ -66,61 +59,62 @@ public class Franchise {
         return s.toString();
     }
 
-    // Utils:
-    BigDecimal calculateAddition(BigDecimal initialPrice){
-        return initialPrice.multiply(new BigDecimal(7)).divide(new BigDecimal(100));   // addition price = 7%
-    }
-
     //Services:
-    protected void refillProductStock(Store store, Product p){
+    protected void refillProductStock(Store store, String p){
         this.refillProductStock(store, p, store.getRegularStockSize());
     }
 
-    protected void refillProductStock(Store store, Product p, int desiredQuantity){
+    protected void refillProductStock(Store store, String productName, int desiredQuantity){
+        Product shp = storeHouse.getProductByName(productName);
+        Product p = store.getProductByName(productName);
 
-        //doar daca in stock ul magazinului mai e loc
-//        if(desiredQuantity + store.storeStock.actualStockSize() > store.getMaxTotalStockSize())
-//            System.out.println("Your requirement exceeds the capacity of the store stock. Trying to add jus");
-//
+        // daca nu exista acest produs in store, il adaug
+        if(p == null) {
+            p = new Product(shp);
+            store.storeStock.updateStock(p, 0);
+        }
+
         if(!store.storeStock.isFull(store.getMaxTotalStockSize())) {
-
             Integer currentQuantity;
             Integer availableQuantity;
 
-            if(store.storeStock.getProductStock(p) == 0)
-                currentQuantity = 0;
-            else
-                currentQuantity = store.storeStock.getProductStock(p);
-
+            currentQuantity = store.storeStock.getProductStock(p);
             Integer neededQuantity = desiredQuantity - currentQuantity;
-
-            if(storeHouse.mainStock.getProductStock(p) == 0)
-                availableQuantity= 0;
-            else
-                availableQuantity = storeHouse.mainStock.getProductStock(p);
+            availableQuantity = storeHouse.mainStock.getProductStock(shp);
 
             if (neededQuantity == 0) {
                 System.out.println("Stock already full.");
             }
             else if(neededQuantity + store.storeStock.actualStockSize() > store.getMaxTotalStockSize()) {
-//                    neededQuantity = store.getMaxTotalStockSize() - store.storeStock.actualStockSize();
                     System.out.println("Your requirement exceeds the capacity of the store stock.");
                 }
             else {
                 if (availableQuantity >= neededQuantity) {
 
                     store.storeStock.updateStock(p, desiredQuantity);
-                    storeHouse.mainStock.updateStock(p, availableQuantity - neededQuantity);
+                    storeHouse.mainStock.updateStock(shp, availableQuantity - neededQuantity);
 
                     System.out.println("The stock of " + p.getProductName() + " succesfully refilled at " + store.address + " store");
 
                 } else {
 
                     store.storeStock.updateStock(p, currentQuantity + availableQuantity);
-                    storeHouse.mainStock.updateStock(p, 0);
+                    storeHouse.mainStock.updateStock(shp, 0);
 
                     System.out.println("Could only be added " + availableQuantity + " pieces. The main stock (from the StoreHouse) of " + p.getProductName() + " is empty now.");
                 }
+
+                // daca au preturi diferite inseamna ori ca furnizorul si-a schimbat oferta, ori ca am comandat de la alt
+                // furnizor decat ultima data
+                // Daca acum l-am cumparat mai scump o sa crestem pretul pentru produs (inclusiv pt lotul vechi).
+                // Daca l-am cumparat la acelasi pret sau mai ieftin, pretul de iesire ramane neschimbat
+                // nu putem sa avem acelasi produs in magazin cu preturi amestsecate.
+                if(shp.getProviderPrice().compareTo(p.getProviderPrice()) > 0) {
+                    System.out.println("in the meantime this product's offer has changed. We will sell it at a new price from now");
+                    p.setProviderPrice(new BigDecimal(String.valueOf(shp.getProviderPrice())));
+                    p.calculateOutprice();
+                }
+
             }
         }
         else
@@ -133,41 +127,47 @@ public class Franchise {
         store.storeBank = new BigDecimal(0);
     }
 
-    void provide(Provider provider, Product p, Integer neededQuantity) {
+    void provide(Provider provider, String productName, Integer neededQuantity) {
+
+        Product p = storeHouse.getProductByName(productName);
+        OfferAndStock offer = provider.getOfferByProduct(productName);
+
+        // daca nu exista acest produs in storehouse, il adaug
+        if(p == null) {
+            p = new Product(productName, new BigDecimal(0));
+            storeHouse.mainStock.updateStock(p, 0);
+        }
 
         if (!storeHouse.mainStock.isFull(storeHouse.getMaxTotalStock())) {
 
-            if (provider.getOfferByProduct(p) == null)
+            if (offer == null)
                 System.out.println("This provider cannot help you this time :( !!");
             else {
-                OfferAndStock tuple = provider.getOfferByProduct(p);
-
+                
                 Integer currentQuantity = storeHouse.mainStock.getProductStock(p);
-                Integer availableQuantity = tuple.getStock();
+                Integer availableQuantity = offer.getStock();
 
                 if (availableQuantity >= neededQuantity) {
 
                     storeHouse.mainStock.updateStock(p, currentQuantity + neededQuantity);
-                    provider.decreaseProductStock(p, neededQuantity);
-
-                    storeHouse.mainBank = storeHouse.mainBank.subtract(tuple.getPrice().multiply( new BigDecimal(neededQuantity)));
-
-                    //product needs the provider price so it can calculate the storePrice for its own
-                    p.setProviderPrice(tuple.getPrice());
-
+                    provider.decreaseProductStock(productName, neededQuantity);
+                    storeHouse.mainBank = storeHouse.mainBank.subtract(offer.getPrice().multiply(new BigDecimal(neededQuantity)));
                     System.out.println("The order of " + p.getProductName() + " successfully fulfilled.");
 
                 } else {
 
                     storeHouse.mainStock.updateStock(p, currentQuantity + availableQuantity);
-                    provider.decreaseProductStock(p, availableQuantity);
-                    storeHouse.mainBank = storeHouse.mainBank.subtract( tuple.getPrice().multiply( new BigDecimal( availableQuantity)));
-
-                    p.setProviderPrice(tuple.getPrice());
-
+                    provider.decreaseProductStock(productName, availableQuantity);
+                    storeHouse.mainBank = storeHouse.mainBank.subtract(offer.getPrice().multiply(new BigDecimal(availableQuantity)));
                     System.out.println("Could only get " + availableQuantity + " pieces of " + p.getProductName() +
                             ". The provider stock of" +
                             p.getProductName() + " is empty now.");
+                }
+
+                if(offer.getPrice().compareTo(p.getProviderPrice()) > 0) {
+                    System.out.println("This product's offer has changed. We will sell it at a new price from now");
+                    p.setProviderPrice(offer.getPrice());
+                    p.calculateOutprice();
                 }
             }
         }
@@ -211,7 +211,7 @@ public class Franchise {
     // cand nu mai avem in depozit un produs si vrem sa comandam de la un furnizor,
     // iteram prin ofertele furnizorilor si il alegem pe cel care vinde produsul mai ieftin
     // find the provider with the best price for a product
-    protected void chooseProvider(Product p) {
+    protected void chooseProvider(String p) {
 
         PriorityQueue<Map.Entry<BigDecimal, Provider>> pq = new PriorityQueue<>(Map.Entry.comparingByKey());
 
@@ -230,32 +230,7 @@ public class Franchise {
         }
     }
 
-    // set the outprice for a product (calculates with a default addition of 7%)
-    // see the entry price and the out price of a product
-    protected void setOutprice(Product product){
-
-        if(product.getStorePrice() != null)
-            System.out.println("entryPrice = " + product.getProviderPrice() + "\noutPrice = "
-                    + product.getStorePrice());
-        else
-        {
-            if(product.getProviderPrice() == null)
-                System.out.println("You have never ordered this product before so we don't have it in our database. " +
-                        "Find a provider at Service7 and order the product at Service 8. ");
-            else
-            {
-                BigDecimal providerPrice = product.getProviderPrice();
-                BigDecimal outprice = providerPrice.add(calculateAddition(providerPrice));
-                product.setStorePrice(outprice);
-
-                System.out.println("entryPrice = " + product.getProviderPrice() + "\noutPrice = "
-                        + product.getStorePrice());
-            }
-        }
-    }
-
     public void UpdateCSV(){
-        write.writeProducts(products);
         write.writeStorehouse(storeHouse);
         write.writeProviders(providers);
         write.writePoints(franchisePoints);
@@ -263,23 +238,6 @@ public class Franchise {
 
     Store getStoreById(int nr){
         return franchisePoints.get(nr);
-    }
-
-    Product getProductById(int nr){
-        return products.get(nr);
-    }
-
-    Product getProductById(String name){
-        int i;
-
-        Product p = new Product(name);
-
-        if(products.contains(p)){
-            i = products.indexOf(p);
-            return products.get(i);
-        }
-
-        return null;
     }
 
     Provider getProviderById(int nr){return providers.get(nr); }
@@ -295,9 +253,5 @@ public class Franchise {
         }
 
         return null; }
-
-    int getPointsNumber(){
-        return franchisePoints.size();
-    }
 
 }

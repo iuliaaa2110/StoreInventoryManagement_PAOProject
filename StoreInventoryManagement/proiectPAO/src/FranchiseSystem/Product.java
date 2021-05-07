@@ -12,7 +12,7 @@ public class Product {
         this.productName = name;
     }
 
-    public Product (String productName,  BigDecimal providerPrice){
+    public Product(String productName, BigDecimal providerPrice) {
         this.productName = productName;
         this.providerPrice = providerPrice;
     }
@@ -21,6 +21,12 @@ public class Product {
         this.productName = productName;
         this.providerPrice = providerPrice;
         this.storePrice = storePrice;
+    }
+
+    public Product(Product p) {
+        this.productName = p.productName;
+        this.providerPrice = p.providerPrice;
+        this.storePrice = p.storePrice;
     }
 
     @Override
@@ -39,7 +45,11 @@ public class Product {
         // typecast o to Complex so that we can compare data members
         Product p = (Product) o;
 
-        return this.productName.equals(p.productName);
+        // daca au acelasi pret de intrare, automat vor avea (daca va fi calculat) si acelasi pret de iesire deci
+        // sunt identice.
+        // a fost totusi nevoie de override ul asta pt ca s-ar putea ca pentru unul din ele sa fi fost deja
+        // calculat pretul de iesire si pt celalalt nu.
+        return this.productName.equals(p.productName) && this.providerPrice.equals(p.providerPrice);
     }
 
     public String toString() {
@@ -47,16 +57,10 @@ public class Product {
         // return productName + " (entryPrice = " + providerPrice + "; outPrice = " + storePrice +")";
     }
 
-    public String Columns() {
-        if(providerPrice ==  null)
-            return productName + ",,";
-
-        if(storePrice ==  null)
-            return productName + "," + providerPrice +",";
-
-        return productName + "," + providerPrice + "," + storePrice;
+    // Utils:
+    BigDecimal calculateAddition(BigDecimal initialPrice){
+        return initialPrice.multiply(new BigDecimal(7)).divide(new BigDecimal(100));   // addition price = 7%
     }
-
 
     public String getProductName() {
         return productName;
@@ -76,6 +80,10 @@ public class Product {
 
     BigDecimal getProviderPrice() {
         return providerPrice;
+    }
+
+    protected void calculateOutprice(){
+        this.storePrice = providerPrice.add(calculateAddition(providerPrice));
     }
 
 }
