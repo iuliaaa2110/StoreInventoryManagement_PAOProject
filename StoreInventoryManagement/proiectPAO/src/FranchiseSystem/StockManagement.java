@@ -33,7 +33,7 @@ public class StockManagement {
         for(Map.Entry<Product, Integer> entry : stock.entrySet()){
             Product p = entry.getKey();
             Integer quantity = entry.getValue();
-            s.append(p.getProductName()).append(",").append(quantity).append("\n");
+            s.append(p.getProductName()).append(",").append(p.getProviderPrice()).append(",").append(quantity).append("\n");
         }
 
         return s.toString();
