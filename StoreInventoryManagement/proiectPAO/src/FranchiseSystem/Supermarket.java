@@ -62,7 +62,7 @@ public class Supermarket extends Store{
                 else
                     this.storeBank = this.storeBank.add(p.getStorePrice().multiply(new BigDecimal(soldQuantity)));
 
-                this.storeStock.updateStock(p, -soldQuantity);
+                this.storeStock.updateStock(p, actualQuantity-soldQuantity);
             }
         }
     }
