@@ -50,10 +50,10 @@ public class Service {
 
     public void refill(){
 
-        System.out.println("\nWrite the number of the store who needs the stock refill, \nthe name of the " +
-                "product you need to add, \n and optional: the final quantity you want to have.\n");
+        System.out.println("\nWrite the number of the store who needs the stock refill, the name of the " +
+                "product you need to add, and optional: the final quantity you want to have.\n");
         System.out.println("With spaces between!");
-        System.out.println("You can do that all over again. Just press '.' when you re done.\n");
+        System.out.println("You can do that all over again. Just press '.' when you re done.");
         System.out.println("Example: 2 MineralWatter 3");
 
         Scanner keyboard = new Scanner(System.in);
@@ -61,21 +61,16 @@ public class Service {
 
         while(!st.equals(".")){
 
-            String[] t = st.split(" ");
+            String[] t = st.trim().split(" ");
 
-            if(t.length == 2) {
-                int storeId = Integer.parseInt(t[0]);
-                Store store = franchise.getStoreById(storeId);
-                Product product = franchise.getProductById(t[1]);
+            int storeId = Integer.parseInt(t[0]);
+            Store store = franchise.getStoreById(storeId);
 
-                franchise.refillProductStock(store, product);
-            }
-            else if(t.length == 3){
-                Store store = franchise.getStoreById(Integer.parseInt(t[0]));
-                Product product = franchise.getProductById(t[1]);
+            if (t.length == 2) {
+                franchise.refillProductStock(store, t[1]);
+            } else if (t.length == 3) {
                 int quantity = Integer.parseInt(t[2]);
-
-                franchise.refillProductStock(store, product, quantity);
+                franchise.refillProductStock(store, t[1], quantity);
             }
 
             st = keyboard.nextLine();
@@ -86,27 +81,18 @@ public class Service {
     // iteram prin ofertele furnizorilor si il alegem pe cel care vinde produsul mai ieftin
     // find the provider with the best price for a product
     public void find_provider() {
-        System.out.println("Write the number or the name of the product you would want to order.");
+        System.out.println("Write the name of the product you would want to order.");
 
         Scanner keyboard = new Scanner(System.in);
+        String product = keyboard.nextLine();
 
-        Product product;
-
-        if(keyboard.hasNextInt())
-            product = franchise.getProductById(keyboard.nextInt());
-        else
-            product = franchise.getProductById(keyboard.nextLine());
-
-        if(product != null)
-            franchise.chooseProvider(product);
-        else
-            System.out.println("This product does not exist");
+        franchise.chooseProvider(product);
     }
 
     public void order(){
         Scanner keyboard = new Scanner(System.in);
 
-        Product product;
+        String product;
         Provider provider;
 
         System.out.println();
@@ -117,12 +103,9 @@ public class Service {
         else
             provider = franchise.getProviderById(keyboard.nextLine());
 
-        System.out.println("Write the number (or the name) of the product you wanna order");
+        System.out.println("Write the name of the product you wanna order");
 
-        if(keyboard.hasNextInt())
-            product = franchise.getProductById(keyboard.nextInt());
-        else
-            product = franchise.getProductById(keyboard.nextLine());
+        product = keyboard.nextLine();
 
         System.out.println("Write the quantity you need");
         int quantity = keyboard.nextInt();
@@ -133,52 +116,66 @@ public class Service {
 
     // if the client buys a significantly amount of items from a Supermarket he gets a discount
     public void sell(){
-        System.out.println("Type the store where the sell occurs");
-
         Scanner keyboard = new Scanner(System.in);
-        String st = keyboard.nextLine().trim();
+        System.out.println("Type the number of the store where the sell occurs");
 
-        String[] t =  st.split(" ");
-        int nr = Integer.parseInt(t[0]);
-        Product product;
+        Store store = franchise.getStoreById(keyboard.nextInt());
 
-        if(nr > franchise.getPointsNumber() || st.length() > 1)
+        if(store == null)
             System.out.println("There is no store with this number/Wrong input.");
         else {
 
-            Map<Product, Integer> myMap = new HashMap<>();
+            HashMap<String, Integer> myMap = new HashMap<>();
 
-            System.out.println("And then type product and quantity with space between." +
-                    " Do it how many times you need ( one pair at a line ). Type '.' if you re done.");
+            System.out.println("Type the order: product and quantity with space between, one pair at a line . Type '.' if you re done. Exp: Cheese 10");
+            // fara acest blank imi da eroare, chiar si cu
+            //        if(keyboard.hasNext())
+            String blank = keyboard.nextLine();
+            String s = keyboard.nextLine();
+            String[] fields = s.split(" ");
 
-            st = keyboard.nextLine().trim();
+            while (!fields[0].equals(".")) {
 
-            while (!st.equals(".")) {
-                t = st.split(" ");
-                myMap.put(franchise.getProductById(t[0]), Integer.parseInt(t[1]));
-                st = keyboard.nextLine().trim();
+                myMap.put(fields[0], Integer.parseInt(fields[1]));
+                fields = keyboard.nextLine().trim().split(" ");
             }
 
-            franchise.getStoreById(nr).variedSell(myMap);
+            store.variedSell(myMap);
         }
 
     }
 
-    public void calculate_outprice(){
-        System.out.println("Type the number (or the name) of the product");
-
+    public void show_outprice(){
         Scanner keyboard = new Scanner(System.in);
-        Product product;
 
-        if(keyboard.hasNextInt())
-            product = franchise.getProductById(keyboard.nextInt());
-        else
-            product = franchise.getProductById(keyboard.nextLine());
+        System.out.println("Type the number of the store");
+        Integer i = keyboard.nextInt();
+        Store store = franchise.getStoreById(i);
+
+        System.out.println("Type the name of the product");
+        String name = "";
+
+        if(keyboard.hasNext())
+            name = keyboard.nextLine();
+
+        Product product = store.getProductByName(name);
 
         if(product != null)
-            franchise.setOutprice(product);
+            System.out.println(product.getStorePrice());
         else
-            System.out.println("Wrong input/ The product does not exist");
+            System.out.println(store.getAddress() + " has not this product in stock");
+    }
+
+    public void show_capacity_status(){
+        Scanner keyboard = new Scanner(System.in);
+        System.out.println("Type the number of the store you wanna find out the capacity status for");
+
+        Store store = franchise.getStoreById(keyboard.nextInt());
+
+        System.out.println("Max capacity: " + store.getMaxTotalStockSize());
+        System.out.println("Actual capacity: " + store.getActualStockSize());
+        System.out.println("Default stock refill per one type of product: " + store.regularStockSize);
+
     }
 
     public void showOptionsList(){
@@ -191,14 +188,14 @@ public class Service {
                 "3.  show_storehouse_bank  = Show the main bank (the bank from the Storehouse) \n" +
                 "4.  show_store_bank       = Show the bank's gain of a store \n" +
                 "5.  collect_gain          = Send the money from a store's bank to the StoreHouse's bank \n" +
-                "6.  refill                = Refill the stock at a store for specific products, inccreasing " +
+                "6.  refill                = Refill the stock at a store for specific productsincreasing " +
                 "the stock to the desired quantity." +
                 "(either to the regular quantity, either to a specific quantity) \n" +
                 "7.  find_provider         = Find the provider with the best price for a product \n" +
                 "8.  order                 = Make an order to a provider \n" +
                 "9.  sell                  = Make a sell \n" +
-                "10. calculate_outprice    = Calculate the outprice for a product \n");
-
+                "10. show_outprice    = Calculate the outprice for a product at a given store \n" +
+                "11. show_capacity_status  = Show capacity status for a given store\n");
     }
 
     public void updateCSV(){

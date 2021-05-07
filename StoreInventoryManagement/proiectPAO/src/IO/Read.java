@@ -26,35 +26,7 @@ public class Read {
         return instance;
     }
 
-    public ArrayList<Product> readProducts(){
-        try(var in = new BufferedReader(new FileReader("StoreInventoryManagement/proiectPAO/data/products.csv"))){
-
-            String line;
-
-            ArrayList<Product> products = new ArrayList<>();
-
-            while ( (line = in.readLine()) != null) {
-                String []fields = line.replaceAll(" ", "").split(",");
-
-                if(fields.length == 3)
-                    products.add(new Product(fields[0], new BigDecimal(fields[1]), new BigDecimal(fields[2])));
-                if(fields.length == 1)
-                    products.add(new Product(fields[0]));
-                if(fields.length == 2)
-                {
-                    System.out.println(fields[1]);
-                products.add(new Product(fields[0], new BigDecimal(fields[1])));}
-            }
-
-            return products;
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public ArrayList<Provider> readProviders(ArrayList<Product> products){
+    public ArrayList<Provider> readProviders(){
         try(var in = new BufferedReader(new FileReader("StoreInventoryManagement/proiectPAO/data/providers.csv"))){
 
             String line;
@@ -67,27 +39,16 @@ public class Read {
                 String providerName = fields[0];
                 String[] elements = fields[1].replaceAll(" ", "").split("/");
 
-                Map<Product, OfferAndStock> offers = new HashMap<>();
+                HashMap<String, OfferAndStock> offers = new HashMap<>();
 
                 for(String element:elements)
                 {
                     String []s = element.replaceAll(" ", "").split("=");
 
-                    Product product = new Product(s[0]);
-                    int i;
-
-                    if(products.contains(product)) {
-                        i = products.indexOf(product);
-                        product = products.get(i);
-                    }
-                    else{
-                        System.out.println("Unknown product: " + s[0]);
-                    }
-
                     String []price_stock = s[1].replaceAll(" ", "").split(";");
                     OfferAndStock offer = new OfferAndStock(new BigDecimal(price_stock[0]), Integer.parseInt(price_stock[1]));
 
-                    offers.put(product, offer);
+                    offers.put(s[0], offer);
                 }
 
                 providers.add(new Provider(providerName, offers));
@@ -101,7 +62,7 @@ public class Read {
         }
     }
 
-    public ArrayList<Store> readStores(ArrayList<Product> products){
+    public ArrayList<Store> readStores(){
         try(var in = new BufferedReader(new FileReader("StoreInventoryManagement/proiectPAO/data/stores.csv"))){
             String line;
 
@@ -110,7 +71,7 @@ public class Read {
             while ( (line = in.readLine()) != null) {
                 String []fields = line.replaceAll(" ", "").split(",");
                 String path = "StoreInventoryManagement/proiectPAO/data/StockManagementCSVs/" + fields[3];
-                StockManagement stockManagement = readStockManagement(path , products);
+                StockManagement stockManagement = readStockManagement(path);
 
                 if(fields[1].equals("ST"))
                     stores.add(new Store(fields[0], new BigDecimal(fields[2]), stockManagement, fields[3]));
@@ -126,7 +87,8 @@ public class Read {
         }
     }
 
-    public StockManagement readStockManagement(String path, ArrayList<Product> products){
+
+    public static StockManagement readStockManagement(String path){
         try(var in = new BufferedReader(new FileReader(path))){
 
             String line;
@@ -136,19 +98,15 @@ public class Read {
             while ( (line = in.readLine()) != null) {
                 String []fields = line.replaceAll(" ", "").split(",");
 
-                if(fields.length != 1)
-                    System.out.println("Datele de intrare nu sunt in formatul corect!");
-
-                Product product = new Product(fields[0]);
-                int i;
-
-                if(products.contains(product)) {
-                    i = products.indexOf(product);
-                    stock.put(products.get(i), Integer.parseInt(fields[1]));
+                if(fields.length != 3)
+                {
+                    System.out.println("Datele de intrare nu sunt in formatul corect!/ Fisierul nu contine nici o coloana");
+                    break;
                 }
-                else{
-                    System.out.println("Unknown product: " + fields[0]);
-                }
+
+                Product product = new Product(fields[0], new BigDecimal(fields[1]));
+                stock.put(product, Integer.parseInt(fields[2]));
+
             }
 
             return new StockManagement(stock);
@@ -159,8 +117,9 @@ public class Read {
         }
     }
 
+
     //StoreHouse o sa aiba mereu o singura linie!
-    public StoreHouse readStoreHouse(ArrayList<Product> products){
+    public StoreHouse readStoreHouse(){
         try(var in = new BufferedReader(new FileReader("StoreInventoryManagement/proiectPAO/data/storehouse.csv"))){
 
             String line;
@@ -170,7 +129,7 @@ public class Read {
 
                 String stockPath ="StoreInventoryManagement/proiectPAO/data/StockManagementCSVs/" + fields[1];
 
-                return StoreHouse.getInstance(readStockManagement(stockPath, products), new BigDecimal(fields[0]),  fields[1]);
+                return StoreHouse.getInstance(readStockManagement(stockPath), new BigDecimal(fields[0]),  fields[1]);
             }
 
             return null;
