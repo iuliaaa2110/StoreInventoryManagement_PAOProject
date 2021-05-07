@@ -100,7 +100,6 @@ public class Read {
 
                 if(fields.length != 3)
                 {
-                    System.out.println(fields[0] + fields[1]);
                     System.out.println("Datele de intrare nu sunt in formatul corect!/ Fisierul nu contine nici o coloana");
                     break;
                 }
