@@ -77,10 +77,10 @@ public class Service {
         }
     }
 
-    // cand nu mai avem in depozit un produs si vrem sa comandam de la un furnizor,
-    // iteram prin ofertele furnizorilor si il alegem pe cel care vinde produsul mai ieftin
-    // find the provider with the best price for a product
     public void find_provider() {
+        // cand nu mai avem in depozit un produs si vrem sa comandam de la un furnizor,
+        // iteram prin ofertele furnizorilor si il alegem pe cel care vinde produsul mai ieftin
+        // find the provider with the best price for a product
         System.out.println("Write the name of the product you would want to order.");
 
         Scanner keyboard = new Scanner(System.in);
@@ -104,7 +104,6 @@ public class Service {
             provider = franchise.getProviderById(keyboard.nextLine());
 
         System.out.println("Write the name of the product you wanna order");
-
         product = keyboard.nextLine();
 
         System.out.println("Write the quantity you need");
@@ -154,21 +153,25 @@ public class Service {
         Scanner keyboard = new Scanner(System.in);
 
         System.out.println("Type the number of the store");
-        Integer i = keyboard.nextInt();
+        int i = keyboard.nextInt();
         Store store = franchise.getStoreById(i);
 
-        System.out.println("Type the name of the product");
-        String name = "";
+        if(store == null)
+            System.out.println("There is no store with this number.");
+        else{
+            System.out.println("Type the name of the product");
+            String name = "";
 
-        if(keyboard.hasNext())
-            name = keyboard.nextLine();
+            if(keyboard.hasNext())
+                name = keyboard.nextLine();
 
-        Product product = store.getProductByName(name);
+            Product product = store.getProductByName(name);
 
-        if(product != null)
-            System.out.println(product.getStorePrice());
-        else
-            System.out.println(store.getAddress() + " has not this product in stock");
+            if(product != null)
+                System.out.println(product.getStorePrice());
+            else
+                System.out.println(store.getAddress() + " has not this product in stock");
+        }
     }
 
     public void show_capacity_status(){
