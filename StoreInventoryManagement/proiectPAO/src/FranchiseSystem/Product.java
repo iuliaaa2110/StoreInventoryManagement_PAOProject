@@ -7,6 +7,7 @@ public class Product {
     private final String productName;
     private BigDecimal providerPrice;
     private BigDecimal storePrice;
+    private Integer stockManagementId;
 
     public Product(String productName, BigDecimal providerPrice) {
         this.productName = productName;

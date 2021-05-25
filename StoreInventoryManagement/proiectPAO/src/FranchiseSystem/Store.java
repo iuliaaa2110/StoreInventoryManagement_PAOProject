@@ -17,6 +17,11 @@ public class Store {
 
     }
 
+//    public Store(String address) {
+//        this.address = address;
+//
+//    }
+
     public Store(String address, BigDecimal storeBank, StockManagement storeStock, String stockManagemenCSV){
         this.address = address;
         this.storeBank = storeBank;
@@ -93,7 +98,7 @@ public class Store {
         return storeStock.actualStockSize();
     }
 
-    protected String getAddress() {
+    public String getAddress() {
         return address;
     }
 
@@ -101,7 +106,7 @@ public class Store {
         return regularStockSize;
     }
 
-    protected BigDecimal getStoreBank() {
+    public BigDecimal getStoreBank() {
         return storeBank;
     }
 

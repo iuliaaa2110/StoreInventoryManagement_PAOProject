@@ -21,7 +21,7 @@ public class Franchise {
 
 
     // Constructors
-    private Franchise() {
+    public Franchise() {
 
 //         this.products = franchiseInit.initProducts();
 //         this.providers = franchiseInit.initProviders(products);
@@ -260,4 +260,7 @@ public class Franchise {
 
         return null; }
 
+    public ArrayList<Store> getFranchisePoints() {
+        return franchisePoints;
+    }
 }
